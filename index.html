@@ -43,7 +43,7 @@
   }
   .form-label .req { color: #c0392b; }
   .field { margin-bottom: 1.1rem; }
-  input[type="text"], input[type="tel"] {
+  input[type="text"], input[type="tel"], input[type="email"] {
     width: 100%;
     padding: 11px 14px;
     border: 1.5px solid #e0dff5;
@@ -55,10 +55,7 @@
     outline: none;
     transition: border-color 0.2s;
   }
-  input[type="text"]:focus, input[type="tel"]:focus {
-    border-color: #534AB7;
-    background: #fff;
-  }
+  input:focus { border-color: #534AB7; background: #fff; }
   .slot-label {
     font-size: 13px;
     font-weight: 500;
@@ -81,12 +78,7 @@
     transition: all 0.18s;
     background: #fafafa;
   }
-  .slot-btn .time {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1a1a4e;
-    display: block;
-  }
+  .slot-btn .time { font-size: 15px; font-weight: 500; color: #1a1a4e; display: block; }
   .slot-btn:hover { border-color: #534AB7; background: #f0eefd; }
   .slot-btn.active { border-color: #534AB7; background: #12124a; }
   .slot-btn.active .time { color: #c9a227; }
@@ -154,6 +146,14 @@
   .entry-code { font-size: 26px; font-weight: 700; color: #12124a; letter-spacing: 0.12em; font-family: 'Playfair Display', serif; }
   .qr-wrap { display: flex; justify-content: center; margin: 0.75rem 0 0.25rem; }
   .qr-note { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .email-note {
+    background: #eafaf0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #27ae60;
+    margin-top: 8px;
+  }
   .whatsapp-cta {
     display: inline-block; margin-top: 1rem;
     background: #25D366; color: #fff;
@@ -168,18 +168,27 @@
 
   <div class="body" id="formBody">
     <div class="error-msg" id="errorMsg"></div>
+
     <div class="field">
       <label class="form-label">Full Name <span class="req">*</span></label>
       <input type="text" id="name" placeholder="Your full name" />
     </div>
+
     <div class="field">
       <label class="form-label">Mobile Number <span class="req">*</span></label>
       <input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10" />
     </div>
+
+    <div class="field">
+      <label class="form-label">Email Address <span class="req">*</span></label>
+      <input type="email" id="email" placeholder="your@email.com" />
+    </div>
+
     <div class="field">
       <label class="form-label">City / Coming From <span class="req">*</span></label>
       <input type="text" id="city" placeholder="e.g. Noida, Delhi, Agra..." />
     </div>
+
     <span class="slot-label">Select Your Preferred Slot <span class="req">*</span></span>
     <div class="slot-grid">
       <div class="slot-btn" onclick="selectSlot(this,'10:00 AM')"><span class="time">10:00 AM</span></div>
@@ -189,9 +198,9 @@
       <div class="slot-btn" onclick="selectSlot(this,'3:00 PM')"><span class="time">3:00 PM</span></div>
       <div class="slot-btn" onclick="selectSlot(this,'5:00 PM')"><span class="time">5:00 PM</span></div>
     </div>
-    <div class="error-msg" id="slotError" style="display:none;">Please select a time slot.</div>
+
     <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">Book My Slot →</button>
-    <p class="footer-note">Team Jhopdi.com will confirm via WhatsApp</p>
+    <p class="footer-note">Confirmation code will be sent to your email</p>
   </div>
 
   <div class="success-screen" id="successScreen">
@@ -200,12 +209,16 @@
     <p>Thank you, <strong id="sName"></strong>.<br/>Your slot is confirmed for</p>
     <div class="success-slot" id="sSlot"></div>
     <p style="font-size:13px;color:#888;">Saturday, 30 May 2026 · Lemon Tree, Noida</p>
+
     <div class="entry-code-box">
       <div class="entry-code-label">Your Entry Code</div>
       <div class="entry-code" id="sCode"></div>
       <div class="qr-wrap"><div id="qrCode"></div></div>
       <div class="qr-note">Show this QR at the entry gate</div>
     </div>
+
+    <div class="email-note" id="emailNote"></div>
+
     <a id="waLink" href="#" class="whatsapp-cta" target="_blank">💬 Share on WhatsApp</a>
     <p class="footer-note" style="margin-top:14px;">RSVP · Team Jhopdi.com</p>
   </div>
@@ -244,11 +257,13 @@ function handleSubmit() {
 
   const name  = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
   const city  = document.getElementById('city').value.trim();
 
-  if (!name) { showError('Please enter your full name.'); return; }
+  if (!name)  { showError('Please enter your full name.'); return; }
   if (!/^[0-9]{10}$/.test(phone)) { showError('Please enter a valid 10-digit mobile number.'); return; }
-  if (!city) { showError('Please enter your city.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
+  if (!city)  { showError('Please enter your city.'); return; }
   if (!chosenSlot) { showError('Please select a time slot.'); return; }
 
   const btn = document.getElementById('submitBtn');
@@ -258,23 +273,15 @@ function handleSubmit() {
   const code = generateCode();
   const timestamp = new Date().toLocaleString('en-IN');
 
-  // Build form-encoded data — most reliable with Apps Script no-cors
-  const params = new URLSearchParams({
-    name, phone, city,
-    slot: chosenSlot,
-    code, timestamp
-  });
+  const params = new URLSearchParams({ name, phone, email, city, slot: chosenSlot, code, timestamp });
 
-  fetch(SHEET_URL + '?' + params.toString(), {
-    method: 'GET',
-    mode: 'no-cors'
-  }).catch(() => {});
+  fetch(SHEET_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(() => {});
 
-  // Show success immediately — data is sent
   setTimeout(() => {
     document.getElementById('sName').textContent = name;
     document.getElementById('sSlot').textContent = chosenSlot;
     document.getElementById('sCode').textContent = code;
+    document.getElementById('emailNote').textContent = '✉ Confirmation email sent to ' + email;
 
     new QRCode(document.getElementById('qrCode'), {
       text: code + '|' + phone + '|' + chosenSlot,
