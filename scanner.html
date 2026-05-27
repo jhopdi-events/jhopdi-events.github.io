@@ -16,6 +16,21 @@
     justify-content: center;
     padding: 1rem;
   }
+
+  /* Flash overlay */
+  .flash {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 999;
+    transition: opacity 0.1s;
+  }
+  .flash.green { background: rgba(39,174,96,0.35); }
+  .flash.red   { background: rgba(231,76,60,0.35); }
+  .flash.yellow { background: rgba(243,156,18,0.35); }
+  .flash.show  { opacity: 1; }
+
   .card {
     background: #fff;
     border-radius: 20px;
@@ -31,28 +46,46 @@
     border-bottom: 3px solid #c9a227;
   }
   .header h1 { font-size: 16px; color: #c9a227; font-weight: 600; }
-  .header p { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+  .header p  { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+
+  /* Stats bar */
+  .stats-bar {
+    background: #f7f5ff;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0dff5;
+  }
+  .stat { text-align: center; }
+  .stat-num  { font-size: 20px; font-weight: 700; color: #12124a; }
+  .stat-num.green  { color: #27ae60; }
+  .stat-num.red    { color: #e74c3c; }
+  .stat-num.yellow { color: #f39c12; }
+  .stat-label { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; }
+
   .body { padding: 1.25rem; }
 
-  /* Camera toggle button */
   .cam-toggle-btn {
     width: 100%;
-    padding: 12px;
+    padding: 13px;
     background: #534AB7;
     color: #fff;
     border: none;
     border-radius: 12px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     font-family: 'Jost', sans-serif;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     transition: background 0.2s;
   }
-  .cam-toggle-btn:hover { background: #3d35a0; }
+  .cam-toggle-btn:hover  { background: #3d35a0; }
   .cam-toggle-btn.active { background: #c0392b; }
 
-  /* Camera container */
+  .cam-status { text-align: center; font-size: 12px; color: #888; margin-bottom: 0.75rem; min-height: 18px; }
+  .cam-status.active { color: #27ae60; }
+  .cam-status.error  { color: #e74c3c; }
+
   .camera-wrap {
     position: relative;
     width: 100%;
@@ -62,11 +95,8 @@
     margin-bottom: 1rem;
     display: none;
   }
-  .camera-wrap video {
-    width: 100%;
-    display: block;
-    border-radius: 12px;
-  }
+  .camera-wrap video { width: 100%; display: block; border-radius: 12px; }
+
   .scanner-overlay {
     position: absolute;
     inset: 0;
@@ -76,8 +106,7 @@
     pointer-events: none;
   }
   .scanner-frame {
-    width: 200px;
-    height: 200px;
+    width: 200px; height: 200px;
     border: 3px solid #c9a227;
     border-radius: 12px;
     box-shadow: 0 0 0 9999px rgba(0,0,0,0.45);
@@ -85,153 +114,142 @@
   }
   .scanner-line {
     position: absolute;
-    left: 0; right: 0;
-    height: 2px;
+    left: 0; right: 0; height: 2px;
     background: #c9a227;
     top: 0;
     animation: scan 2s linear infinite;
     box-shadow: 0 0 8px #c9a227;
   }
-  @keyframes scan {
-    0%   { top: 0; }
-    100% { top: calc(100% - 2px); }
-  }
-  .cam-status {
-    text-align: center;
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 0.75rem;
-    min-height: 18px;
-  }
-  .cam-status.active { color: #27ae60; }
-  .cam-status.error { color: #e74c3c; }
+  @keyframes scan { 0% { top: 0; } 100% { top: calc(100% - 2px); } }
 
-  /* Divider */
+  /* Countdown ring */
+  .countdown-wrap {
+    position: absolute;
+    bottom: 10px; right: 10px;
+    display: none;
+  }
+  .countdown-wrap.show { display: block; }
+  .countdown-circle {
+    width: 44px; height: 44px;
+    background: rgba(0,0,0,0.65);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #c9a227;
+    border: 2px solid #c9a227;
+  }
+
   .divider {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-    color: #ccc;
-    font-size: 12px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1rem; color: #ccc; font-size: 12px;
   }
   .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #e0dff5;
+    content: ''; flex: 1; height: 1px; background: #e0dff5;
   }
 
-  /* Manual input */
-  .manual-wrap {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 1rem;
-  }
+  .manual-wrap { display: flex; gap: 8px; margin-bottom: 1rem; }
   .manual-wrap input {
-    flex: 1;
-    padding: 10px 14px;
-    border: 1.5px solid #e0dff5;
-    border-radius: 10px;
-    font-size: 14px;
-    font-family: 'Jost', sans-serif;
-    color: #111;
-    outline: none;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    flex: 1; padding: 10px 14px;
+    border: 1.5px solid #e0dff5; border-radius: 10px;
+    font-size: 14px; font-family: 'Jost', sans-serif;
+    color: #111; outline: none; text-transform: uppercase; letter-spacing: 0.05em;
   }
   .manual-wrap input:focus { border-color: #534AB7; }
   .manual-wrap button {
-    padding: 10px 18px;
-    background: #12124a;
-    color: #c9a227;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Jost', sans-serif;
-    cursor: pointer;
-    white-space: nowrap;
+    padding: 10px 18px; background: #12124a; color: #c9a227;
+    border: none; border-radius: 10px; font-size: 14px;
+    font-weight: 500; font-family: 'Jost', sans-serif; cursor: pointer;
   }
   .manual-wrap button:hover { background: #1e1e6e; }
 
-  /* Result card */
   .result {
-    display: none;
-    border-radius: 12px;
-    padding: 1.25rem;
-    text-align: center;
-    margin-bottom: 1rem;
+    display: none; border-radius: 12px;
+    padding: 1.25rem; text-align: center; margin-bottom: 1rem;
   }
-  .result.valid   { background: #eafaf0; border: 2px solid #27ae60; }
-  .result.invalid { background: #fff0f0; border: 2px solid #e74c3c; }
+  .result.valid     { background: #eafaf0; border: 2px solid #27ae60; }
+  .result.invalid   { background: #fff0f0; border: 2px solid #e74c3c; }
   .result.duplicate { background: #fff8e1; border: 2px solid #f39c12; }
 
-  .result-icon   { font-size: 44px; margin-bottom: 8px; }
-  .result-status { font-size: 20px; font-weight: 700; margin-bottom: 14px; letter-spacing: 0.04em; }
-  .result.valid    .result-status { color: #27ae60; }
-  .result.invalid  .result-status { color: #e74c3c; }
+  .result-icon   { font-size: 44px; margin-bottom: 6px; }
+  .result-status {
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 12px; letter-spacing: 0.04em;
+  }
+  .result.valid     .result-status { color: #27ae60; }
+  .result.invalid   .result-status { color: #e74c3c; }
   .result.duplicate .result-status { color: #f39c12; }
 
   .result-details { text-align: left; }
   .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 0;
-    border-bottom: 0.5px solid rgba(0,0,0,0.08);
-    font-size: 14px;
+    display: flex; justify-content: space-between;
+    padding: 7px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 14px;
   }
   .detail-row:last-child { border-bottom: none; }
   .detail-label { color: #888; }
   .detail-value { font-weight: 500; color: #111; text-align: right; max-width: 60%; }
 
-  .scan-again-btn {
-    width: 100%;
-    padding: 12px;
-    background: #12124a;
-    color: #c9a227;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Jost', sans-serif;
-    cursor: pointer;
-    margin-top: 1rem;
+  /* Auto countdown bar */
+  .auto-bar-wrap {
+    margin-top: 12px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 99px; height: 6px; overflow: hidden;
+    display: none;
   }
-  .scan-again-btn:hover { background: #1e1e6e; }
+  .auto-bar {
+    height: 100%; border-radius: 99px;
+    width: 100%;
+    transition: width linear;
+  }
+  .result.valid     .auto-bar { background: #27ae60; }
+  .result.invalid   .auto-bar { background: #e74c3c; }
+  .result.duplicate .auto-bar { background: #f39c12; }
 
-  .loading {
-    text-align: center;
-    padding: 1rem;
-    color: #888;
-    font-size: 14px;
+  .auto-label {
+    font-size: 11px; color: #aaa;
+    text-align: center; margin-top: 6px;
     display: none;
   }
 
-  .scan-count {
-    text-align: center;
-    font-size: 12px;
-    color: #aaa;
-    margin-top: 4px;
-    padding-bottom: 4px;
+  .scan-again-btn {
+    width: 100%; padding: 12px; background: #12124a; color: #c9a227;
+    border: none; border-radius: 10px; font-size: 14px; font-weight: 500;
+    font-family: 'Jost', sans-serif; cursor: pointer; margin-top: 10px;
   }
-  .scan-count span { color: #12124a; font-weight: 600; }
+  .scan-again-btn:hover { background: #1e1e6e; }
+
+  .loading { text-align: center; padding: 1rem; color: #888; font-size: 14px; display: none; }
 </style>
 </head>
 <body>
+
+<div class="flash" id="flash"></div>
+
 <div class="card">
   <div class="header">
     <h1>🎪 Expo 1.0 — Entry Scanner</h1>
     <p>Vrindavan Property Expo | 30 May 2026</p>
   </div>
 
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num green" id="countValid">0</div>
+      <div class="stat-label">✅ Valid</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num yellow" id="countDupe">0</div>
+      <div class="stat-label">⚠️ Duplicate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num red" id="countInvalid">0</div>
+      <div class="stat-label">❌ Invalid</div>
+    </div>
+  </div>
+
   <div class="body">
 
-    <!-- Camera Toggle -->
     <button class="cam-toggle-btn" id="camBtn" onclick="toggleCamera()">📷 Start Camera Scanner</button>
     <div class="cam-status" id="camStatus"></div>
 
-    <!-- Camera View -->
     <div class="camera-wrap" id="cameraWrap">
       <video id="video" autoplay playsinline muted></video>
       <div class="scanner-overlay">
@@ -240,46 +258,78 @@
         </div>
       </div>
       <canvas id="canvas" style="display:none;"></canvas>
+      <div class="countdown-wrap" id="countdownWrap">
+        <div class="countdown-circle" id="countdownNum">3</div>
+      </div>
     </div>
 
     <div class="divider">OR enter code manually</div>
 
-    <!-- Manual Input -->
     <div class="manual-wrap">
-      <input type="text" id="manualCode" placeholder="VPE-AB3X7K" maxlength="10" onkeydown="if(event.key==='Enter') verifyManual()" />
+      <input type="text" id="manualCode" placeholder="VPE-AB3X7K" maxlength="10"
+             onkeydown="if(event.key==='Enter') verifyManual()" />
       <button onclick="verifyManual()">Verify</button>
     </div>
 
     <div class="loading" id="loading">⏳ Verifying...</div>
 
-    <!-- Result -->
     <div class="result" id="result">
-      <div class="result-icon" id="resultIcon"></div>
+      <div class="result-icon"   id="resultIcon"></div>
       <div class="result-status" id="resultStatus"></div>
       <div class="result-details" id="resultDetails"></div>
-      <button class="scan-again-btn" onclick="scanAgain()">📷 Scan Next Person</button>
+      <div class="auto-bar-wrap" id="autoBarWrap"><div class="auto-bar" id="autoBar"></div></div>
+      <div class="auto-label"    id="autoLabel"></div>
+      <button class="scan-again-btn" onclick="scanAgainNow()">📷 Scan Next Person</button>
     </div>
 
-    <div class="scan-count">Total entries today: <span id="scanCount">0</span></div>
   </div>
 </div>
 
 <script>
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzOlVHLkpitue9zvCPwg2RweGTiFxEZFxsPSVfNaYYPqZJKyESf_NNFbnxeWhU_jK8R/exec';
-let scanCount = 0;
-let cameraOn = false;
+
+let cameraOn   = false;
 let videoStream = null;
 let scanInterval = null;
-let lastScanned = '';
-let verifying = false;
+let lastScanned  = '';
+let verifying    = false;
+let autoTimer    = null;
+let countValid   = 0;
+let countDupe    = 0;
+let countInvalid = 0;
 
-// ── Camera ──────────────────────────────────────────────
+// ── Beep Sounds ─────────────────────────────────────────
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+function beep(type) {
+  try {
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (type === 'valid') {
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(); osc.stop(ctx.currentTime + 0.3);
+    } else if (type === 'invalid' || type === 'duplicate') {
+      osc.frequency.value = 220;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start(); osc.stop(ctx.currentTime + 0.5);
+    }
+  } catch(e) {}
+}
+
+// ── Flash ────────────────────────────────────────────────
+function flashScreen(color) {
+  const el = document.getElementById('flash');
+  el.className = 'flash ' + color + ' show';
+  setTimeout(() => { el.className = 'flash ' + color; }, 300);
+}
+
+// ── Camera ───────────────────────────────────────────────
 async function toggleCamera() {
-  if (cameraOn) {
-    stopCamera();
-  } else {
-    await startCamera();
-  }
+  cameraOn ? stopCamera() : await startCamera();
 }
 
 async function startCamera() {
@@ -287,7 +337,7 @@ async function startCamera() {
   const status = document.getElementById('camStatus');
   const wrap   = document.getElementById('cameraWrap');
 
-  btn.textContent = '⏳ Starting camera...';
+  btn.textContent = '⏳ Starting...';
   btn.disabled = true;
   status.textContent = 'Requesting camera permission...';
   status.className = 'cam-status';
@@ -296,47 +346,44 @@ async function startCamera() {
     videoStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }
     });
-
     const video = document.getElementById('video');
     video.srcObject = videoStream;
     await video.play();
 
     wrap.style.display = 'block';
     cameraOn = true;
-    btn.textContent = '⏹ Stop Camera';
-    btn.className = 'cam-toggle-btn active';
-    btn.disabled = false;
+    btn.textContent  = '⏹ Stop Camera';
+    btn.className    = 'cam-toggle-btn active';
+    btn.disabled     = false;
     status.textContent = '🟢 Camera active — point at QR code';
     status.className = 'cam-status active';
+    lastScanned = '';
+    verifying   = false;
 
-    // Start scanning frames
     scanInterval = setInterval(scanFrame, 300);
-
-  } catch (err) {
+  } catch(err) {
     btn.textContent = '📷 Start Camera Scanner';
-    btn.disabled = false;
+    btn.disabled    = false;
     status.textContent = '❌ Camera access denied — use manual entry below';
-    status.className = 'cam-status error';
-    console.error('Camera error:', err);
+    status.className   = 'cam-status error';
   }
 }
 
 function stopCamera() {
   if (scanInterval) { clearInterval(scanInterval); scanInterval = null; }
   if (videoStream)  { videoStream.getTracks().forEach(t => t.stop()); videoStream = null; }
-
   const video = document.getElementById('video');
   video.srcObject = null;
-
-  document.getElementById('cameraWrap').style.display = 'none';
+  document.getElementById('cameraWrap').style.display  = 'none';
   document.getElementById('camBtn').textContent = '📷 Start Camera Scanner';
-  document.getElementById('camBtn').className = 'cam-toggle-btn';
+  document.getElementById('camBtn').className   = 'cam-toggle-btn';
   document.getElementById('camStatus').textContent = '';
-  document.getElementById('camStatus').className = 'cam-status';
+  document.getElementById('camStatus').className   = 'cam-status';
+  document.getElementById('countdownWrap').className = 'countdown-wrap';
   cameraOn = false;
 }
 
-// ── QR Decode via Canvas + BarcodeDetector ──────────────
+// ── Scan Frame ───────────────────────────────────────────
 async function scanFrame() {
   if (verifying) return;
   const video  = document.getElementById('video');
@@ -349,29 +396,26 @@ async function scanFrame() {
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   try {
-    // Use BarcodeDetector API (Chrome/Android)
     if ('BarcodeDetector' in window) {
       const detector = new BarcodeDetector({ formats: ['qr_code'] });
       const codes = await detector.detect(canvas);
       if (codes.length > 0) {
-        const raw = codes[0].rawValue;
-        const code = raw.split('|')[0].trim().toUpperCase();
+        const code = codes[0].rawValue.split('|')[0].trim().toUpperCase();
         if (code && code !== lastScanned) {
           lastScanned = code;
-          verifying = true;
+          verifying   = true;
           verifyCode(code);
         }
       }
     } else {
-      // Fallback: jsQR
       await loadJsQR();
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const result = window.jsQR(imageData.data, imageData.width, imageData.height);
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const result  = window.jsQR(imgData.data, imgData.width, imgData.height);
       if (result) {
         const code = result.data.split('|')[0].trim().toUpperCase();
         if (code && code !== lastScanned) {
           lastScanned = code;
-          verifying = true;
+          verifying   = true;
           verifyCode(code);
         }
       }
@@ -379,7 +423,6 @@ async function scanFrame() {
   } catch(e) {}
 }
 
-// Load jsQR as fallback
 function loadJsQR() {
   return new Promise((resolve) => {
     if (window.jsQR) { resolve(); return; }
@@ -390,7 +433,7 @@ function loadJsQR() {
   });
 }
 
-// ── Verify Code ─────────────────────────────────────────
+// ── Verify ───────────────────────────────────────────────
 function verifyManual() {
   const code = document.getElementById('manualCode').value.trim().toUpperCase();
   if (!code) { alert('Please enter an entry code.'); return; }
@@ -399,26 +442,24 @@ function verifyManual() {
 
 function verifyCode(code) {
   document.getElementById('loading').style.display = 'block';
-  document.getElementById('result').style.display = 'none';
+  document.getElementById('result').style.display  = 'none';
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
 
-  // JSONP call
   const cbName = 'cb_' + Date.now();
   const script = document.createElement('script');
-  script.src = SHEET_URL + '?code=' + encodeURIComponent(code) + '&callback=' + cbName;
+  script.src   = SHEET_URL + '?code=' + encodeURIComponent(code) + '&callback=' + cbName;
 
   const timer = setTimeout(() => {
     document.getElementById('loading').style.display = 'none';
     showResult('invalid', '❌', 'CONNECTION ERROR', [
-      { label: 'Code', value: code },
+      { label: 'Code',   value: code },
       { label: 'Action', value: 'Check internet & try again' }
-    ]);
-    cleanup();
-    verifying = false;
+    ], false);
+    cleanup(); verifying = false;
   }, 10000);
 
   window[cbName] = function(data) {
-    clearTimeout(timer);
-    cleanup();
+    clearTimeout(timer); cleanup();
     document.getElementById('loading').style.display = 'none';
     handleResult(data, code);
     verifying = false;
@@ -432,57 +473,121 @@ function verifyCode(code) {
   document.body.appendChild(script);
 }
 
+// ── Handle Result ────────────────────────────────────────
 function handleResult(data, code) {
   if (data.status === 'valid') {
-    scanCount++;
-    document.getElementById('scanCount').textContent = scanCount;
-    showResult('valid', '✅', 'ENTRY ALLOWED', [
-      { label: 'Name',  value: data.name },
-      { label: 'Slot',  value: data.slot },
-      { label: 'Phone', value: data.phone },
-      { label: 'Code',  value: code }
-    ]);
+    countValid++;
+    document.getElementById('countValid').textContent = countValid;
+    flashScreen('green');
+    beep('valid');
     if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+    showResult('valid', '✅', 'ENTRY ALLOWED', [
+      { label: 'Name',  value: data.name  },
+      { label: 'Slot',  value: data.slot  },
+      { label: 'Phone', value: data.phone },
+      { label: 'Code',  value: code       }
+    ], true);
 
   } else if (data.status === 'already_scanned') {
+    countDupe++;
+    document.getElementById('countDupe').textContent = countDupe;
+    flashScreen('yellow');
+    beep('duplicate');
+    if (navigator.vibrate) navigator.vibrate([300]);
     showResult('duplicate', '⚠️', 'ALREADY SCANNED', [
       { label: 'Name',   value: data.name },
       { label: 'Slot',   value: data.slot },
-      { label: 'Code',   value: code },
+      { label: 'Code',   value: code      },
       { label: 'Status', value: '⚠️ Entry already used!' }
-    ]);
-    if (navigator.vibrate) navigator.vibrate([300]);
+    ], true);
 
   } else {
+    countInvalid++;
+    document.getElementById('countInvalid').textContent = countInvalid;
+    flashScreen('red');
+    beep('invalid');
+    if (navigator.vibrate) navigator.vibrate([300]);
     showResult('invalid', '❌', 'INVALID CODE', [
       { label: 'Code',   value: code },
       { label: 'Status', value: 'Not found in system' }
-    ]);
-    if (navigator.vibrate) navigator.vibrate([300]);
+    ], true);
   }
 }
 
-function showResult(type, icon, status, details) {
+// ── Show Result + Auto Restart ───────────────────────────
+function showResult(type, icon, status, details, autoRestart) {
   const resultEl = document.getElementById('result');
   resultEl.className = 'result ' + type;
-  document.getElementById('resultIcon').textContent = icon;
+  document.getElementById('resultIcon').textContent   = icon;
   document.getElementById('resultStatus').textContent = status;
 
   let html = '';
   details.forEach(d => {
-    html += '<div class="detail-row"><span class="detail-label">' + d.label + '</span><span class="detail-value">' + d.value + '</span></div>';
+    html += '<div class="detail-row"><span class="detail-label">' + d.label +
+            '</span><span class="detail-value">' + d.value + '</span></div>';
   });
   document.getElementById('resultDetails').innerHTML = html;
   resultEl.style.display = 'block';
   resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Auto countdown — 3 seconds
+  if (autoRestart && cameraOn) {
+    const barWrap = document.getElementById('autoBarWrap');
+    const bar     = document.getElementById('autoBar');
+    const label   = document.getElementById('autoLabel');
+
+    barWrap.style.display = 'block';
+    label.style.display   = 'block';
+    bar.style.transition  = 'none';
+    bar.style.width       = '100%';
+
+    // Show countdown in camera overlay
+    const cdWrap = document.getElementById('countdownWrap');
+    const cdNum  = document.getElementById('countdownNum');
+    cdWrap.className = 'countdown-wrap show';
+
+    let sec = 3;
+    cdNum.textContent  = sec;
+    label.textContent  = 'Next scan in ' + sec + '...';
+
+    const tick = setInterval(() => {
+      sec--;
+      cdNum.textContent  = sec;
+      label.textContent  = sec > 0 ? 'Next scan in ' + sec + '...' : 'Restarting...';
+      if (sec <= 0) { clearInterval(tick); }
+    }, 1000);
+
+    // Shrink bar over 3s
+    requestAnimationFrame(() => {
+      bar.style.transition = 'width 3s linear';
+      bar.style.width = '0%';
+    });
+
+    autoTimer = setTimeout(() => {
+      barWrap.style.display = 'none';
+      label.style.display   = 'none';
+      clearInterval(tick);
+      scanAgainNow();
+    }, 3000);
+
+  } else {
+    document.getElementById('autoBarWrap').style.display = 'none';
+    document.getElementById('autoLabel').style.display   = 'none';
+  }
 }
 
-function scanAgain() {
-  document.getElementById('result').style.display = 'none';
+// ── Scan Again ───────────────────────────────────────────
+function scanAgainNow() {
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+  document.getElementById('result').style.display      = 'none';
+  document.getElementById('autoBarWrap').style.display = 'none';
+  document.getElementById('autoLabel').style.display   = 'none';
   document.getElementById('manualCode').value = '';
   document.getElementById('loading').style.display = 'none';
+  document.getElementById('countdownWrap').className = 'countdown-wrap';
   lastScanned = '';
-  verifying = false;
+  verifying   = false;
+  if (!cameraOn) startCamera();
 }
 </script>
 </body>
