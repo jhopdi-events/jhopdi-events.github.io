@@ -280,8 +280,8 @@ function handleSubmit() {
     .then(data => {
 
       if (data.status === 'duplicate_phone') {
-        showError('⚠️ Yeh mobile number already registered hai! Koi doosra number use karo.');
-        btn.disabled = false;
+         showError('⚠️ This mobile number is already registered! Please use a different number.');
+         btn.disabled = false;
         btn.textContent = 'Book My Slot →';
         return;
       }
