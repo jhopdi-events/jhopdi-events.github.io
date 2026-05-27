@@ -17,7 +17,6 @@
     padding: 1rem;
   }
 
-  /* Flash overlay */
   .flash {
     position: fixed;
     inset: 0;
@@ -26,10 +25,10 @@
     z-index: 999;
     transition: opacity 0.1s;
   }
-  .flash.green { background: rgba(39,174,96,0.35); }
-  .flash.red   { background: rgba(231,76,60,0.35); }
+  .flash.green  { background: rgba(39,174,96,0.35); }
+  .flash.red    { background: rgba(231,76,60,0.35); }
   .flash.yellow { background: rgba(243,156,18,0.35); }
-  .flash.show  { opacity: 1; }
+  .flash.show   { opacity: 1; }
 
   .card {
     background: #fff;
@@ -48,7 +47,6 @@
   .header h1 { font-size: 16px; color: #c9a227; font-weight: 600; }
   .header p  { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 3px; }
 
-  /* Stats bar */
   .stats-bar {
     background: #f7f5ff;
     display: flex;
@@ -57,7 +55,7 @@
     border-bottom: 1px solid #e0dff5;
   }
   .stat { text-align: center; }
-  .stat-num  { font-size: 20px; font-weight: 700; color: #12124a; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #12124a; }
   .stat-num.green  { color: #27ae60; }
   .stat-num.red    { color: #e74c3c; }
   .stat-num.yellow { color: #f39c12; }
@@ -122,12 +120,7 @@
   }
   @keyframes scan { 0% { top: 0; } 100% { top: calc(100% - 2px); } }
 
-  /* Countdown ring */
-  .countdown-wrap {
-    position: absolute;
-    bottom: 10px; right: 10px;
-    display: none;
-  }
+  .countdown-wrap { position: absolute; bottom: 10px; right: 10px; display: none; }
   .countdown-wrap.show { display: block; }
   .countdown-circle {
     width: 44px; height: 44px;
@@ -142,9 +135,7 @@
     display: flex; align-items: center; gap: 10px;
     margin-bottom: 1rem; color: #ccc; font-size: 12px;
   }
-  .divider::before, .divider::after {
-    content: ''; flex: 1; height: 1px; background: #e0dff5;
-  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e0dff5; }
 
   .manual-wrap { display: flex; gap: 8px; margin-bottom: 1rem; }
   .manual-wrap input {
@@ -170,10 +161,7 @@
   .result.duplicate { background: #fff8e1; border: 2px solid #f39c12; }
 
   .result-icon   { font-size: 44px; margin-bottom: 6px; }
-  .result-status {
-    font-size: 20px; font-weight: 700;
-    margin-bottom: 12px; letter-spacing: 0.04em;
-  }
+  .result-status { font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.04em; }
   .result.valid     .result-status { color: #27ae60; }
   .result.invalid   .result-status { color: #e74c3c; }
   .result.duplicate .result-status { color: #f39c12; }
@@ -187,27 +175,18 @@
   .detail-label { color: #888; }
   .detail-value { font-weight: 500; color: #111; text-align: right; max-width: 60%; }
 
-  /* Auto countdown bar */
   .auto-bar-wrap {
     margin-top: 12px;
     background: rgba(0,0,0,0.07);
     border-radius: 99px; height: 6px; overflow: hidden;
     display: none;
   }
-  .auto-bar {
-    height: 100%; border-radius: 99px;
-    width: 100%;
-    transition: width linear;
-  }
+  .auto-bar { height: 100%; border-radius: 99px; width: 100%; transition: width linear; }
   .result.valid     .auto-bar { background: #27ae60; }
   .result.invalid   .auto-bar { background: #e74c3c; }
   .result.duplicate .auto-bar { background: #f39c12; }
 
-  .auto-label {
-    font-size: 11px; color: #aaa;
-    text-align: center; margin-top: 6px;
-    display: none;
-  }
+  .auto-label { font-size: 11px; color: #aaa; text-align: center; margin-top: 6px; display: none; }
 
   .scan-again-btn {
     width: 100%; padding: 12px; background: #12124a; color: #c9a227;
@@ -229,10 +208,9 @@
     <p>Vrindavan Property Expo | 30 May 2026</p>
   </div>
 
-  <!-- Stats Bar -->
   <div class="stats-bar">
     <div class="stat">
-      <div class="stat-num green" id="countValid">0</div>
+      <div class="stat-num green"  id="countValid">0</div>
       <div class="stat-label">✅ Valid</div>
     </div>
     <div class="stat">
@@ -240,7 +218,7 @@
       <div class="stat-label">⚠️ Duplicate</div>
     </div>
     <div class="stat">
-      <div class="stat-num red" id="countInvalid">0</div>
+      <div class="stat-num red"    id="countInvalid">0</div>
       <div class="stat-label">❌ Invalid</div>
     </div>
   </div>
@@ -259,7 +237,7 @@
       </div>
       <canvas id="canvas" style="display:none;"></canvas>
       <div class="countdown-wrap" id="countdownWrap">
-        <div class="countdown-circle" id="countdownNum">3</div>
+        <div class="countdown-circle" id="countdownNum">5</div>
       </div>
     </div>
 
@@ -274,11 +252,11 @@
     <div class="loading" id="loading">⏳ Verifying...</div>
 
     <div class="result" id="result">
-      <div class="result-icon"   id="resultIcon"></div>
-      <div class="result-status" id="resultStatus"></div>
+      <div class="result-icon"    id="resultIcon"></div>
+      <div class="result-status"  id="resultStatus"></div>
       <div class="result-details" id="resultDetails"></div>
-      <div class="auto-bar-wrap" id="autoBarWrap"><div class="auto-bar" id="autoBar"></div></div>
-      <div class="auto-label"    id="autoLabel"></div>
+      <div class="auto-bar-wrap"  id="autoBarWrap"><div class="auto-bar" id="autoBar"></div></div>
+      <div class="auto-label"     id="autoLabel"></div>
       <button class="scan-again-btn" onclick="scanAgainNow()">📷 Scan Next Person</button>
     </div>
 
@@ -287,23 +265,25 @@
 
 <script>
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzOlVHLkpitue9zvCPwg2RweGTiFxEZFxsPSVfNaYYPqZJKyESf_NNFbnxeWhU_jK8R/exec';
+const AUTO_SECONDS = 5; // ← sirf yahan badlo timing
 
-let cameraOn   = false;
+let cameraOn    = false;
 let videoStream = null;
 let scanInterval = null;
 let lastScanned  = '';
 let verifying    = false;
 let autoTimer    = null;
+let tickInterval = null;
 let countValid   = 0;
 let countDupe    = 0;
 let countInvalid = 0;
 
-// ── Beep Sounds ─────────────────────────────────────────
+// ── Beep ─────────────────────────────────────────────────
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 function beep(type) {
   try {
-    const ctx = new AudioCtx();
-    const osc = ctx.createOscillator();
+    const ctx  = new AudioCtx();
+    const osc  = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain); gain.connect(ctx.destination);
     if (type === 'valid') {
@@ -311,7 +291,7 @@ function beep(type) {
       gain.gain.setValueAtTime(0.3, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
       osc.start(); osc.stop(ctx.currentTime + 0.3);
-    } else if (type === 'invalid' || type === 'duplicate') {
+    } else {
       osc.frequency.value = 220;
       gain.gain.setValueAtTime(0.3, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
@@ -320,14 +300,14 @@ function beep(type) {
   } catch(e) {}
 }
 
-// ── Flash ────────────────────────────────────────────────
+// ── Flash ─────────────────────────────────────────────────
 function flashScreen(color) {
   const el = document.getElementById('flash');
   el.className = 'flash ' + color + ' show';
   setTimeout(() => { el.className = 'flash ' + color; }, 300);
 }
 
-// ── Camera ───────────────────────────────────────────────
+// ── Camera ────────────────────────────────────────────────
 async function toggleCamera() {
   cameraOn ? stopCamera() : await startCamera();
 }
@@ -356,34 +336,38 @@ async function startCamera() {
     btn.className    = 'cam-toggle-btn active';
     btn.disabled     = false;
     status.textContent = '🟢 Camera active — point at QR code';
-    status.className = 'cam-status active';
+    status.className   = 'cam-status active';
     lastScanned = '';
     verifying   = false;
 
     scanInterval = setInterval(scanFrame, 300);
   } catch(err) {
-    btn.textContent = '📷 Start Camera Scanner';
-    btn.disabled    = false;
+    btn.textContent    = '📷 Start Camera Scanner';
+    btn.disabled       = false;
     status.textContent = '❌ Camera access denied — use manual entry below';
     status.className   = 'cam-status error';
   }
 }
 
 function stopCamera() {
-  if (scanInterval) { clearInterval(scanInterval); scanInterval = null; }
-  if (videoStream)  { videoStream.getTracks().forEach(t => t.stop()); videoStream = null; }
+  if (scanInterval)  { clearInterval(scanInterval);  scanInterval = null; }
+  if (tickInterval)  { clearInterval(tickInterval);  tickInterval = null; }
+  if (autoTimer)     { clearTimeout(autoTimer);       autoTimer    = null; }
+  if (videoStream)   { videoStream.getTracks().forEach(t => t.stop()); videoStream = null; }
+
   const video = document.getElementById('video');
   video.srcObject = null;
+
   document.getElementById('cameraWrap').style.display  = 'none';
-  document.getElementById('camBtn').textContent = '📷 Start Camera Scanner';
-  document.getElementById('camBtn').className   = 'cam-toggle-btn';
-  document.getElementById('camStatus').textContent = '';
-  document.getElementById('camStatus').className   = 'cam-status';
-  document.getElementById('countdownWrap').className = 'countdown-wrap';
+  document.getElementById('camBtn').textContent        = '📷 Start Camera Scanner';
+  document.getElementById('camBtn').className          = 'cam-toggle-btn';
+  document.getElementById('camStatus').textContent     = '';
+  document.getElementById('camStatus').className       = 'cam-status';
+  document.getElementById('countdownWrap').className   = 'countdown-wrap';
   cameraOn = false;
 }
 
-// ── Scan Frame ───────────────────────────────────────────
+// ── Scan Frame ────────────────────────────────────────────
 async function scanFrame() {
   if (verifying) return;
   const video  = document.getElementById('video');
@@ -398,12 +382,11 @@ async function scanFrame() {
   try {
     if ('BarcodeDetector' in window) {
       const detector = new BarcodeDetector({ formats: ['qr_code'] });
-      const codes = await detector.detect(canvas);
+      const codes    = await detector.detect(canvas);
       if (codes.length > 0) {
         const code = codes[0].rawValue.split('|')[0].trim().toUpperCase();
         if (code && code !== lastScanned) {
-          lastScanned = code;
-          verifying   = true;
+          lastScanned = code; verifying = true;
           verifyCode(code);
         }
       }
@@ -414,8 +397,7 @@ async function scanFrame() {
       if (result) {
         const code = result.data.split('|')[0].trim().toUpperCase();
         if (code && code !== lastScanned) {
-          lastScanned = code;
-          verifying   = true;
+          lastScanned = code; verifying = true;
           verifyCode(code);
         }
       }
@@ -433,7 +415,7 @@ function loadJsQR() {
   });
 }
 
-// ── Verify ───────────────────────────────────────────────
+// ── Verify ────────────────────────────────────────────────
 function verifyManual() {
   const code = document.getElementById('manualCode').value.trim().toUpperCase();
   if (!code) { alert('Please enter an entry code.'); return; }
@@ -443,7 +425,8 @@ function verifyManual() {
 function verifyCode(code) {
   document.getElementById('loading').style.display = 'block';
   document.getElementById('result').style.display  = 'none';
-  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+  if (autoTimer)   { clearTimeout(autoTimer);    autoTimer    = null; }
+  if (tickInterval){ clearInterval(tickInterval); tickInterval = null; }
 
   const cbName = 'cb_' + Date.now();
   const script = document.createElement('script');
@@ -473,7 +456,7 @@ function verifyCode(code) {
   document.body.appendChild(script);
 }
 
-// ── Handle Result ────────────────────────────────────────
+// ── Handle Result ─────────────────────────────────────────
 function handleResult(data, code) {
   if (data.status === 'valid') {
     countValid++;
@@ -492,7 +475,7 @@ function handleResult(data, code) {
     countDupe++;
     document.getElementById('countDupe').textContent = countDupe;
     flashScreen('yellow');
-    beep('duplicate');
+    beep('invalid');
     if (navigator.vibrate) navigator.vibrate([300]);
     showResult('duplicate', '⚠️', 'ALREADY SCANNED', [
       { label: 'Name',   value: data.name },
@@ -514,7 +497,7 @@ function handleResult(data, code) {
   }
 }
 
-// ── Show Result + Auto Restart ───────────────────────────
+// ── Show Result + Auto Countdown ──────────────────────────
 function showResult(type, icon, status, details, autoRestart) {
   const resultEl = document.getElementById('result');
   resultEl.className = 'result ' + type;
@@ -530,45 +513,41 @@ function showResult(type, icon, status, details, autoRestart) {
   resultEl.style.display = 'block';
   resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  // Auto countdown — 3 seconds
   if (autoRestart && cameraOn) {
     const barWrap = document.getElementById('autoBarWrap');
     const bar     = document.getElementById('autoBar');
     const label   = document.getElementById('autoLabel');
+    const cdWrap  = document.getElementById('countdownWrap');
+    const cdNum   = document.getElementById('countdownNum');
 
     barWrap.style.display = 'block';
     label.style.display   = 'block';
     bar.style.transition  = 'none';
     bar.style.width       = '100%';
+    cdWrap.className      = 'countdown-wrap show';
 
-    // Show countdown in camera overlay
-    const cdWrap = document.getElementById('countdownWrap');
-    const cdNum  = document.getElementById('countdownNum');
-    cdWrap.className = 'countdown-wrap show';
-
-    let sec = 3;
+    let sec = AUTO_SECONDS;
     cdNum.textContent  = sec;
     label.textContent  = 'Next scan in ' + sec + '...';
 
-    const tick = setInterval(() => {
+    if (tickInterval) clearInterval(tickInterval);
+    tickInterval = setInterval(() => {
       sec--;
-      cdNum.textContent  = sec;
-      label.textContent  = sec > 0 ? 'Next scan in ' + sec + '...' : 'Restarting...';
-      if (sec <= 0) { clearInterval(tick); }
+      cdNum.textContent = sec;
+      label.textContent = sec > 0 ? 'Next scan in ' + sec + '...' : 'Restarting...';
+      if (sec <= 0) { clearInterval(tickInterval); tickInterval = null; }
     }, 1000);
 
-    // Shrink bar over 3s
     requestAnimationFrame(() => {
-      bar.style.transition = 'width 3s linear';
+      bar.style.transition = 'width ' + AUTO_SECONDS + 's linear';
       bar.style.width = '0%';
     });
 
     autoTimer = setTimeout(() => {
       barWrap.style.display = 'none';
       label.style.display   = 'none';
-      clearInterval(tick);
       scanAgainNow();
-    }, 3000);
+    }, AUTO_SECONDS * 1000);
 
   } else {
     document.getElementById('autoBarWrap').style.display = 'none';
@@ -576,15 +555,16 @@ function showResult(type, icon, status, details, autoRestart) {
   }
 }
 
-// ── Scan Again ───────────────────────────────────────────
+// ── Scan Again ────────────────────────────────────────────
 function scanAgainNow() {
-  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+  if (autoTimer)    { clearTimeout(autoTimer);    autoTimer    = null; }
+  if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
   document.getElementById('result').style.display      = 'none';
   document.getElementById('autoBarWrap').style.display = 'none';
   document.getElementById('autoLabel').style.display   = 'none';
-  document.getElementById('manualCode').value = '';
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('countdownWrap').className = 'countdown-wrap';
+  document.getElementById('manualCode').value          = '';
+  document.getElementById('loading').style.display     = 'none';
+  document.getElementById('countdownWrap').className   = 'countdown-wrap';
   lastScanned = '';
   verifying   = false;
   if (!cameraOn) startCamera();
