@@ -348,7 +348,8 @@ function downloadEntryCard() {
   const slot = document.getElementById('sSlot').textContent;
   const code = document.getElementById('sCode').textContent;
 
-  const CW = 720, CH = 400;
+  // Canvas size — wider to avoid cutoff
+  const CW = 800, CH = 400;
   const canvas = document.createElement('canvas');
   canvas.width  = CW;
   canvas.height = CH;
@@ -358,164 +359,163 @@ function downloadEntryCard() {
   ctx.fillStyle = '#12124a';
   ctx.fillRect(0, 0, CW, CH);
 
-  // Subtle gradient overlay left side
-  const grad = ctx.createLinearGradient(0, 0, CW * 0.6, 0);
+  // Subtle gradient
+  const grad = ctx.createLinearGradient(0, 0, CW * 0.55, 0);
   grad.addColorStop(0, 'rgba(83,74,183,0.25)');
   grad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, CW, CH);
 
-  // ── Gold top & bottom bars ───────────────────────────
+  // Gold top bar
   ctx.fillStyle = '#c9a227';
   ctx.fillRect(0, 0, CW, 5);
+  // Gold bottom bar
   ctx.fillRect(0, CH - 5, CW, 5);
-
-  // ── Left gold accent strip ───────────────────────────
-  ctx.fillStyle = '#c9a227';
+  // Gold left strip
   ctx.fillRect(0, 0, 5, CH);
 
-  // ── Vertical divider ────────────────────────────────
+  // Dashed vertical divider at midpoint
   ctx.strokeStyle = 'rgba(201,162,39,0.3)';
   ctx.lineWidth = 1;
-  ctx.setLineDash([4, 4]);
+  ctx.setLineDash([5, 5]);
   ctx.beginPath();
-  ctx.moveTo(360, 20);
-  ctx.lineTo(360, CH - 20);
+  ctx.moveTo(370, 20);
+  ctx.lineTo(370, CH - 20);
   ctx.stroke();
   ctx.setLineDash([]);
 
   // ══════════════════════════════════════════════
-  // LEFT SECTION — Text info
+  // LEFT SECTION
   // ══════════════════════════════════════════════
 
   // Event title
   ctx.fillStyle = '#c9a227';
-  ctx.font = 'bold 11px Arial';
-  ctx.letterSpacing = '2px';
-  ctx.fillText('VRINDAVAN PROPERTY EXPO 1.0', 28, 44);
+  ctx.font = 'bold 12px Arial';
+  ctx.fillText('VRINDAVAN PROPERTY EXPO 1.0', 24, 44);
 
   // Underline
   ctx.strokeStyle = 'rgba(201,162,39,0.4)';
   ctx.lineWidth = 0.8;
+  ctx.setLineDash([]);
   ctx.beginPath();
-  ctx.moveTo(24, 50);
-  ctx.lineTo(340, 50);
+  ctx.moveTo(24, 52);
+  ctx.lineTo(348, 52);
   ctx.stroke();
 
-  // Date + venue
+  // Date + venue — shortened to fit
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '10px Arial';
-  ctx.fillText('Saturday, 30 May 2026  ·  Lemon Tree (Sandal Suites), Noida', 24, 66);
+  ctx.fillText('Sat, 30 May 2026  ·  Lemon Tree, Sector-135, Noida', 24, 68);
 
-  // ── Name ────────────────────────────────────────────
+  // Guest name
   ctx.fillStyle = 'rgba(201,162,39,0.7)';
   ctx.font = '9px Arial';
-  ctx.fillText('GUEST NAME', 24, 100);
-
+  ctx.fillText('GUEST NAME', 24, 102);
   ctx.fillStyle = '#ffffff';
   ctx.font = 'bold 20px Arial';
-  ctx.fillText(name, 24, 124);
+  ctx.fillText(name, 24, 126);
 
-  // ── Slot ────────────────────────────────────────────
+  // Slot
   ctx.fillStyle = 'rgba(201,162,39,0.7)';
   ctx.font = '9px Arial';
-  ctx.fillText('SLOT', 24, 158);
+  ctx.fillText('SLOT', 24, 162);
 
   // Slot pill
   ctx.fillStyle = 'rgba(201,162,39,0.15)';
   ctx.strokeStyle = '#c9a227';
   ctx.lineWidth = 1.2;
-  roundRect(ctx, 20, 165, 140, 32, 6);
+  roundRect(ctx, 22, 170, 150, 34, 6);
   ctx.fill();
   ctx.stroke();
-
   ctx.fillStyle = '#c9a227';
   ctx.font = 'bold 18px Arial';
   ctx.textAlign = 'center';
-  ctx.fillText(slot, 90, 186);
+  ctx.fillText(slot, 97, 193);
   ctx.textAlign = 'left';
 
-  // ── Entry Code ──────────────────────────────────────
+  // Entry code
   ctx.fillStyle = 'rgba(201,162,39,0.7)';
   ctx.font = '9px Arial';
-  ctx.fillText('ENTRY CODE', 24, 224);
+  ctx.fillText('ENTRY CODE', 24, 228);
 
   // Code box
   ctx.fillStyle = 'rgba(201,162,39,0.12)';
   ctx.strokeStyle = '#c9a227';
   ctx.lineWidth = 1.5;
-  roundRect(ctx, 20, 232, 210, 48, 8);
+  roundRect(ctx, 22, 236, 230, 52, 8);
   ctx.fill();
   ctx.stroke();
-
   ctx.fillStyle = '#c9a227';
-  ctx.font = 'bold 28px "Courier New"';
+  ctx.font = 'bold 30px "Courier New"';
   ctx.textAlign = 'center';
-  ctx.fillText(code, 125, 265);
+  ctx.fillText(code, 137, 272);
   ctx.textAlign = 'left';
 
-  // Show at gate hint
-  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  // Hint text
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
   ctx.font = '9px Arial';
   ctx.textAlign = 'center';
-  ctx.fillText('Show this code or QR at the entry gate', 185, 302);
+  ctx.fillText('Show this code or QR at the entry gate', 185, 312);
   ctx.textAlign = 'left';
 
-  // ── Footer left ──────────────────────────────────────
-  ctx.fillStyle = 'rgba(201,162,39,0.5)';
+  // Footer left
+  ctx.fillStyle = 'rgba(201,162,39,0.45)';
   ctx.font = '8px Arial';
-  ctx.fillText('RSVP · Team Jhopdi.com  |  jhopdi-events.github.io', 24, CH - 16);
+  ctx.fillText('RSVP · Team Jhopdi.com  |  jhopdi-events.github.io', 24, CH - 14);
 
   // ══════════════════════════════════════════════
-  // RIGHT SECTION — QR code
+  // RIGHT SECTION — QR
   // ══════════════════════════════════════════════
+  const QR_SIZE = 210;
+  const QR_X = 390;
+  const QR_Y = 38;
+  const CENTER_X = QR_X + QR_SIZE / 2 + 20;
+
   const qrCanvas = document.querySelector('#qrCode canvas');
   if (qrCanvas) {
-    // White QR background box
+    // White background for QR
     ctx.fillStyle = '#ffffff';
-    roundRect(ctx, 384, 40, 226, 226, 12);
+    roundRect(ctx, QR_X, QR_Y, QR_SIZE + 40, QR_SIZE + 20, 12);
     ctx.fill();
 
-    // Draw QR
-    ctx.drawImage(qrCanvas, 395, 51, 204, 204);
+    // Draw QR centered in white box
+    ctx.drawImage(qrCanvas, QR_X + 20, QR_Y + 10, QR_SIZE, QR_SIZE);
 
-    // QR labels
-    ctx.fillStyle = 'rgba(201,162,39,0.8)';
-    ctx.font = 'bold 9px Arial';
+    // Labels below QR
+    ctx.fillStyle = 'rgba(201,162,39,0.85)';
+    ctx.font = 'bold 9.5px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('SCAN QR AT ENTRY GATE', CW - 96, 288);
+    ctx.fillText('SCAN QR AT ENTRY GATE', CENTER_X, QR_Y + QR_SIZE + 38);
 
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
     ctx.font = '8.5px Arial';
-    ctx.fillText('or show Entry Code: ' + code, CW - 96, 304);
-    ctx.textAlign = 'left';
+    ctx.fillText('or show Entry Code: ' + code, CENTER_X, QR_Y + QR_SIZE + 54);
   } else {
-    // Fallback if QR not ready
-    ctx.fillStyle = 'rgba(255,255,255,0.1)';
-    roundRect(ctx, 384, 40, 226, 226, 12);
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    roundRect(ctx, QR_X, QR_Y, QR_SIZE + 40, QR_SIZE + 20, 12);
     ctx.fill();
-    ctx.fillStyle = 'rgba(201,162,39,0.6)';
+    ctx.fillStyle = 'rgba(201,162,39,0.5)';
     ctx.font = '11px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('QR Code', CW - 96, 158);
-    ctx.textAlign = 'left';
+    ctx.fillText('QR Code', CENTER_X, QR_Y + QR_SIZE / 2);
   }
-
-  // ── Investments line bottom right ────────────────────
-  ctx.fillStyle = 'rgba(255,255,255,0.3)';
-  ctx.font = '8px Arial';
-  ctx.textAlign = 'center';
-  ctx.fillText('Investments below ₹50 Lacs  ·  Followed by Hi-Tea', CW - 96, CH - 16);
   ctx.textAlign = 'left';
 
-  // ── Download ─────────────────────────────────────────
+  // Footer right
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.font = '8px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('Investments below ₹50 Lacs  ·  Followed by Hi-Tea', CENTER_X, CH - 14);
+  ctx.textAlign = 'left';
+
+  // Download
   const link = document.createElement('a');
   link.download = 'VPE-EntryCard-' + code + '.png';
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
 
-// Helper: rounded rectangle path
+// Helper — rounded rectangle
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
