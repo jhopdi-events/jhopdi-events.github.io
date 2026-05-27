@@ -236,7 +236,7 @@ function selectSlot(el, value) {
 
 function showError(msg) {
   const el = document.getElementById('errorMsg');
-  el.textContent = msg;
+  el.innerHTML = msg;
   el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -275,32 +275,53 @@ function handleSubmit() {
 
   const params = new URLSearchParams({ name, phone, email, city, slot: chosenSlot, code, timestamp });
 
-  fetch(SHEET_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(() => {});
+  fetch(SHEET_URL + '?' + params.toString())
+    .then(r => r.json())
+    .then(data => {
 
-  setTimeout(() => {
-    document.getElementById('sName').textContent = name;
-    document.getElementById('sSlot').textContent = chosenSlot;
-    document.getElementById('sCode').textContent = code;
-    document.getElementById('emailNote').textContent = '✉ Confirmation email sent to ' + email;
+      if (data.status === 'duplicate_phone') {
+        showError('⚠️ Yeh mobile number already registered hai! Koi doosra number use karo.');
+        btn.disabled = false;
+        btn.textContent = 'Book My Slot →';
+        return;
+      }
 
-    new QRCode(document.getElementById('qrCode'), {
-      text: code + '|' + phone + '|' + chosenSlot,
-      width: 120, height: 120,
-      colorDark: '#12124a', colorLight: '#ffffff'
+      if (data.status === 'duplicate_email') {
+        showError('⚠️ Yeh email already registered hai!<br>Tumhara Entry Code hai: <strong>' + data.code + '</strong><br>Apna inbox check karo.');
+        btn.disabled = false;
+        btn.textContent = 'Book My Slot →';
+        return;
+      }
+
+      // Success
+      document.getElementById('sName').textContent = name;
+      document.getElementById('sSlot').textContent = chosenSlot;
+      document.getElementById('sCode').textContent = code;
+      document.getElementById('emailNote').textContent = '✉ Confirmation email sent to ' + email;
+
+      new QRCode(document.getElementById('qrCode'), {
+        text: code + '|' + phone + '|' + chosenSlot,
+        width: 120, height: 120,
+        colorDark: '#12124a', colorLight: '#ffffff'
+      });
+
+      const msg = encodeURIComponent(
+        'Hi! I have registered for Vrindavan Property Expo 1.0!\n' +
+        'Name: ' + name + '\n' +
+        'Slot: ' + chosenSlot + '\n' +
+        'Entry Code: ' + code + '\n' +
+        'Date: Saturday, 30 May 2026 | Lemon Tree, Sector-135, Noida'
+      );
+      document.getElementById('waLink').href = 'https://wa.me/?text=' + msg;
+
+      document.getElementById('formBody').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+    })
+    .catch(() => {
+      showError('Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Book My Slot →';
     });
-
-    const msg = encodeURIComponent(
-      'Hi! I have registered for Vrindavan Property Expo 1.0!\n' +
-      'Name: ' + name + '\n' +
-      'Slot: ' + chosenSlot + '\n' +
-      'Entry Code: ' + code + '\n' +
-      'Date: Saturday, 30 May 2026 | Lemon Tree, Sector-135, Noida'
-    );
-    document.getElementById('waLink').href = 'https://wa.me/?text=' + msg;
-
-    document.getElementById('formBody').style.display = 'none';
-    document.getElementById('successScreen').style.display = 'block';
-  }, 800);
 }
 </script>
 </body>
