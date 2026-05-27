@@ -278,14 +278,6 @@ function selectSlot(el, value) {
   document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   chosenSlot = value;
-  document.getElementById('selectedSlot').value = value;
-}
-
-function generateCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = 'VPE-';
-  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-  return code;
 }
 
 function showError(msg) {
@@ -298,6 +290,25 @@ function hideError() {
   document.getElementById('errorMsg').style.display = 'none';
 }
 
+// JSONP — only reliable way to read Apps Script response cross-origin
+function callSheet(params) {
+  return new Promise((resolve, reject) => {
+    const cbName = 'jcb_' + Date.now();
+    const url = SHEET_URL + '?' + new URLSearchParams({...params, callback: cbName}).toString();
+    const script = document.createElement('script');
+    const timer = setTimeout(() => { reject(new Error('timeout')); cleanup(); }, 12000);
+    window[cbName] = (data) => { resolve(data); cleanup(); };
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[cbName];
+      script.parentNode && script.parentNode.removeChild(script);
+    }
+    script.onerror = () => { reject(new Error('network')); cleanup(); };
+    script.src = url;
+    document.body.appendChild(script);
+  });
+}
+
 async function handleSubmit(e) {
   e.preventDefault();
   hideError();
@@ -308,52 +319,43 @@ async function handleSubmit(e) {
   const phone = document.getElementById('phone').value.trim();
   const city  = document.getElementById('city').value.trim();
 
-  if (phone.length !== 10) { showError('Please enter a valid 10-digit mobile number.'); return; }
+  if (!/^[0-9]{10}$/.test(phone)) {
+    showError('Please enter a valid 10-digit mobile number.');
+    return;
+  }
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.textContent = 'Checking...';
+  btn.textContent = 'Please wait...';
 
   try {
-    // Check duplicate + register in one call
-    const res = await fetch(SHEET_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'register',
-        name, phone, city,
-        slot: chosenSlot,
-        timestamp: new Date().toLocaleString('en-IN')
-      })
+    const result = await callSheet({
+      action: 'register',
+      name, phone, city,
+      slot: chosenSlot,
+      timestamp: new Date().toLocaleString('en-IN')
     });
 
-    const result = await res.json();
-
     if (result.status === 'duplicate') {
-      showError('This mobile number is already registered! Please contact Team Jhopdi.com on WhatsApp.');
+      showError('This mobile number is already registered! Contact Team Jhopdi.com on WhatsApp.');
       btn.disabled = false;
-      btn.textContent = 'Book My Slot →';
+      btn.textContent = 'Book My Slot \u2192';
       return;
     }
 
-    // Success
     const code = result.code;
     document.getElementById('sName').textContent = name;
     document.getElementById('sSlot').textContent = chosenSlot;
     document.getElementById('sCode').textContent = code;
 
-    // Generate QR
     new QRCode(document.getElementById('qrCode'), {
       text: code + '|' + phone + '|' + chosenSlot,
-      width: 120,
-      height: 120,
-      colorDark: '#12124a',
-      colorLight: '#ffffff'
+      width: 120, height: 120,
+      colorDark: '#12124a', colorLight: '#ffffff'
     });
 
-    // WhatsApp share link
     const msg = encodeURIComponent(
-      'Hi! I have registered for Vrindavan Property Expo 1.0 🎉\n' +
+      'Hi! I have registered for Vrindavan Property Expo 1.0 \uD83C\uDF89\n' +
       'Name: ' + name + '\n' +
       'Slot: ' + chosenSlot + '\n' +
       'Entry Code: ' + code + '\n' +
@@ -367,7 +369,7 @@ async function handleSubmit(e) {
   } catch (err) {
     showError('Something went wrong. Please try again.');
     btn.disabled = false;
-    btn.textContent = 'Book My Slot →';
+    btn.textContent = 'Book My Slot \u2192';
   }
 }
 </script>
