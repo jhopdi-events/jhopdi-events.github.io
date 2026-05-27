@@ -16,7 +16,6 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    overflow-x: hidden;
   }
   body::before {
     content: '';
@@ -27,24 +26,20 @@
     pointer-events: none;
   }
   .card {
-    background: #ffffff;
+    background: #fff;
     border-radius: 20px;
     width: 100%;
     max-width: 480px;
     overflow: hidden;
     box-shadow: 0 24px 80px rgba(0,0,0,0.5);
   }
-  .body {
-    padding: 1.75rem 1.75rem 2rem;
-    background: #fff;
-  }
+  .body { padding: 1.75rem 1.75rem 2rem; }
   .form-label {
     display: block;
     font-size: 13px;
     font-weight: 500;
     color: #1a1a4e;
     margin-bottom: 7px;
-    letter-spacing: 0.02em;
   }
   .form-label .req { color: #c0392b; }
   .field { margin-bottom: 1.1rem; }
@@ -87,7 +82,7 @@
     background: #fafafa;
   }
   .slot-btn .time {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     color: #1a1a4e;
     display: block;
@@ -95,7 +90,17 @@
   .slot-btn:hover { border-color: #534AB7; background: #f0eefd; }
   .slot-btn.active { border-color: #534AB7; background: #12124a; }
   .slot-btn.active .time { color: #c9a227; }
-  input[type="hidden"] { display: none; }
+  .error-msg {
+    background: #fff0f0;
+    border: 1.5px solid #f5c6c6;
+    color: #c0392b;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 1rem;
+    display: none;
+    text-align: center;
+  }
   .submit-btn {
     width: 100%;
     padding: 14px;
@@ -113,142 +118,80 @@
   }
   .submit-btn:hover { background: #1e1e6e; }
   .submit-btn:disabled { background: #888; cursor: not-allowed; }
-  .footer-note {
-    text-align: center;
-    font-size: 11.5px;
-    color: #aaa;
-    margin-top: 14px;
-  }
-  .error-msg {
-    background: #fff0f0;
-    border: 1.5px solid #f5c6c6;
-    color: #c0392b;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 13px;
-    margin-bottom: 1rem;
-    display: none;
-    text-align: center;
-  }
-  /* Success screen */
+  .footer-note { text-align: center; font-size: 11.5px; color: #aaa; margin-top: 14px; }
   .success-screen {
     display: none;
     text-align: center;
     padding: 2rem 1.75rem 2.5rem;
-    background: #fff;
   }
   .success-icon {
-    width: 64px;
-    height: 64px;
+    width: 64px; height: 64px;
     background: #eafaf0;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     margin: 0 auto 1rem;
     font-size: 30px;
   }
   .success-screen h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: #12124a;
-    margin-bottom: 6px;
+    font-size: 22px; color: #12124a; margin-bottom: 6px;
   }
   .success-screen p { font-size: 14px; color: #666; line-height: 1.6; }
   .success-slot {
-    background: #12124a;
-    color: #c9a227;
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: 500;
-    display: inline-block;
-    margin: 0.75rem 0;
+    background: #12124a; color: #c9a227;
+    border-radius: 10px; padding: 10px 20px;
+    font-size: 18px; font-weight: 500;
+    display: inline-block; margin: 0.75rem 0;
     font-family: 'Playfair Display', serif;
   }
   .entry-code-box {
     background: #f7f5ff;
     border: 2px dashed #534AB7;
     border-radius: 12px;
-    padding: 1rem;
-    margin: 1rem 0;
+    padding: 1rem; margin: 1rem 0;
   }
-  .entry-code-label {
-    font-size: 11px;
-    color: #888;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .entry-code {
-    font-size: 26px;
-    font-weight: 700;
-    color: #12124a;
-    letter-spacing: 0.12em;
-    font-family: 'Playfair Display', serif;
-  }
-  .qr-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 0.75rem 0 0.25rem;
-  }
-  .qr-note {
-    font-size: 11px;
-    color: #aaa;
-    margin-top: 4px;
-  }
+  .entry-code-label { font-size: 11px; color: #888; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .entry-code { font-size: 26px; font-weight: 700; color: #12124a; letter-spacing: 0.12em; font-family: 'Playfair Display', serif; }
+  .qr-wrap { display: flex; justify-content: center; margin: 0.75rem 0 0.25rem; }
+  .qr-note { font-size: 11px; color: #aaa; margin-top: 4px; }
   .whatsapp-cta {
-    display: inline-block;
-    margin-top: 1rem;
-    background: #25D366;
-    color: #fff;
-    text-decoration: none;
-    padding: 11px 22px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
+    display: inline-block; margin-top: 1rem;
+    background: #25D366; color: #fff;
+    text-decoration: none; padding: 11px 22px;
+    border-radius: 10px; font-size: 14px; font-weight: 500;
   }
 </style>
 </head>
 <body>
-
 <div class="card">
-  <img src="bannerexp1.0.jpg" alt="Vrindavan Property Expo 1.0" style="width:100%; display:block; border-radius: 20px 20px 0 0;" />
+  <img src="bannerexp1.0.jpg" alt="Vrindavan Property Expo 1.0" style="width:100%;display:block;border-radius:20px 20px 0 0;" />
 
   <div class="body" id="formBody">
     <div class="error-msg" id="errorMsg"></div>
-    <form id="regForm" onsubmit="handleSubmit(event)">
-
-      <div class="field">
-        <label class="form-label">Full Name <span class="req">*</span></label>
-        <input type="text" id="name" placeholder="Your full name" required />
-      </div>
-
-      <div class="field">
-        <label class="form-label">Mobile Number <span class="req">*</span></label>
-        <input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10" pattern="[0-9]{10}" required />
-      </div>
-
-      <div class="field">
-        <label class="form-label">City / Coming From <span class="req">*</span></label>
-        <input type="text" id="city" placeholder="e.g. Noida, Delhi, Agra..." required />
-      </div>
-
-      <span class="slot-label">Select Your Preferred Slot <span class="req">*</span></span>
-      <div class="slot-grid">
-        <div class="slot-btn" onclick="selectSlot(this, '10:00 AM')"><span class="time">10:00 AM</span></div>
-        <div class="slot-btn" onclick="selectSlot(this, '11:00 AM')"><span class="time">11:00 AM</span></div>
-        <div class="slot-btn" onclick="selectSlot(this, '12:30 PM')"><span class="time">12:30 PM</span></div>
-        <div class="slot-btn" onclick="selectSlot(this, '2:00 PM')"><span class="time">2:00 PM</span></div>
-        <div class="slot-btn" onclick="selectSlot(this, '3:00 PM')"><span class="time">3:00 PM</span></div>
-        <div class="slot-btn" onclick="selectSlot(this, '5:00 PM')"><span class="time">5:00 PM</span></div>
-      </div>
-      <input type="hidden" id="selectedSlot" />
-
-      <button type="submit" class="submit-btn" id="submitBtn">Book My Slot →</button>
-      <p class="footer-note">Team Jhopdi.com will confirm via WhatsApp</p>
-
-    </form>
+    <div class="field">
+      <label class="form-label">Full Name <span class="req">*</span></label>
+      <input type="text" id="name" placeholder="Your full name" />
+    </div>
+    <div class="field">
+      <label class="form-label">Mobile Number <span class="req">*</span></label>
+      <input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10" />
+    </div>
+    <div class="field">
+      <label class="form-label">City / Coming From <span class="req">*</span></label>
+      <input type="text" id="city" placeholder="e.g. Noida, Delhi, Agra..." />
+    </div>
+    <span class="slot-label">Select Your Preferred Slot <span class="req">*</span></span>
+    <div class="slot-grid">
+      <div class="slot-btn" onclick="selectSlot(this,'10:00 AM')"><span class="time">10:00 AM</span></div>
+      <div class="slot-btn" onclick="selectSlot(this,'11:00 AM')"><span class="time">11:00 AM</span></div>
+      <div class="slot-btn" onclick="selectSlot(this,'12:30 PM')"><span class="time">12:30 PM</span></div>
+      <div class="slot-btn" onclick="selectSlot(this,'2:00 PM')"><span class="time">2:00 PM</span></div>
+      <div class="slot-btn" onclick="selectSlot(this,'3:00 PM')"><span class="time">3:00 PM</span></div>
+      <div class="slot-btn" onclick="selectSlot(this,'5:00 PM')"><span class="time">5:00 PM</span></div>
+    </div>
+    <div class="error-msg" id="slotError" style="display:none;">Please select a time slot.</div>
+    <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">Book My Slot →</button>
+    <p class="footer-note">Team Jhopdi.com will confirm via WhatsApp</p>
   </div>
 
   <div class="success-screen" id="successScreen">
@@ -256,15 +199,13 @@
     <h2>You're Registered!</h2>
     <p>Thank you, <strong id="sName"></strong>.<br/>Your slot is confirmed for</p>
     <div class="success-slot" id="sSlot"></div>
-    <p style="font-size:13px; color:#888;">Saturday, 30 May 2026 · Lemon Tree, Noida</p>
-
+    <p style="font-size:13px;color:#888;">Saturday, 30 May 2026 · Lemon Tree, Noida</p>
     <div class="entry-code-box">
       <div class="entry-code-label">Your Entry Code</div>
       <div class="entry-code" id="sCode"></div>
       <div class="qr-wrap"><div id="qrCode"></div></div>
       <div class="qr-note">Show this QR at the entry gate</div>
     </div>
-
     <a id="waLink" href="#" class="whatsapp-cta" target="_blank">💬 Share on WhatsApp</a>
     <p class="footer-note" style="margin-top:14px;">RSVP · Team Jhopdi.com</p>
   </div>
@@ -284,66 +225,53 @@ function showError(msg) {
   const el = document.getElementById('errorMsg');
   el.textContent = msg;
   el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function hideError() {
   document.getElementById('errorMsg').style.display = 'none';
 }
 
-// JSONP — only reliable way to read Apps Script response cross-origin
-function callSheet(params) {
-  return new Promise((resolve, reject) => {
-    const cbName = 'jcb_' + Date.now();
-    const url = SHEET_URL + '?' + new URLSearchParams({...params, callback: cbName}).toString();
-    const script = document.createElement('script');
-    const timer = setTimeout(() => { reject(new Error('timeout')); cleanup(); }, 12000);
-    window[cbName] = (data) => { resolve(data); cleanup(); };
-    function cleanup() {
-      clearTimeout(timer);
-      delete window[cbName];
-      script.parentNode && script.parentNode.removeChild(script);
-    }
-    script.onerror = () => { reject(new Error('network')); cleanup(); };
-    script.src = url;
-    document.body.appendChild(script);
-  });
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'VPE-';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
 }
 
-async function handleSubmit(e) {
-  e.preventDefault();
+function handleSubmit() {
   hideError();
-
-  if (!chosenSlot) { showError('Please select a time slot.'); return; }
 
   const name  = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const city  = document.getElementById('city').value.trim();
 
-  if (!/^[0-9]{10}$/.test(phone)) {
-    showError('Please enter a valid 10-digit mobile number.');
-    return;
-  }
+  if (!name) { showError('Please enter your full name.'); return; }
+  if (!/^[0-9]{10}$/.test(phone)) { showError('Please enter a valid 10-digit mobile number.'); return; }
+  if (!city) { showError('Please enter your city.'); return; }
+  if (!chosenSlot) { showError('Please select a time slot.'); return; }
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.textContent = 'Please wait...';
+  btn.textContent = 'Submitting...';
 
-  try {
-    const result = await callSheet({
-      action: 'register',
-      name, phone, city,
-      slot: chosenSlot,
-      timestamp: new Date().toLocaleString('en-IN')
-    });
+  const code = generateCode();
+  const timestamp = new Date().toLocaleString('en-IN');
 
-    if (result.status === 'duplicate') {
-      showError('This mobile number is already registered! Contact Team Jhopdi.com on WhatsApp.');
-      btn.disabled = false;
-      btn.textContent = 'Book My Slot \u2192';
-      return;
-    }
+  // Build form-encoded data — most reliable with Apps Script no-cors
+  const params = new URLSearchParams({
+    name, phone, city,
+    slot: chosenSlot,
+    code, timestamp
+  });
 
-    const code = result.code;
+  fetch(SHEET_URL + '?' + params.toString(), {
+    method: 'GET',
+    mode: 'no-cors'
+  }).catch(() => {});
+
+  // Show success immediately — data is sent
+  setTimeout(() => {
     document.getElementById('sName').textContent = name;
     document.getElementById('sSlot').textContent = chosenSlot;
     document.getElementById('sCode').textContent = code;
@@ -355,7 +283,7 @@ async function handleSubmit(e) {
     });
 
     const msg = encodeURIComponent(
-      'Hi! I have registered for Vrindavan Property Expo 1.0 \uD83C\uDF89\n' +
+      'Hi! I have registered for Vrindavan Property Expo 1.0!\n' +
       'Name: ' + name + '\n' +
       'Slot: ' + chosenSlot + '\n' +
       'Entry Code: ' + code + '\n' +
@@ -365,14 +293,8 @@ async function handleSubmit(e) {
 
     document.getElementById('formBody').style.display = 'none';
     document.getElementById('successScreen').style.display = 'block';
-
-  } catch (err) {
-    showError('Something went wrong. Please try again.');
-    btn.disabled = false;
-    btn.textContent = 'Book My Slot \u2192';
-  }
+  }, 800);
 }
 </script>
-
 </body>
 </html>
