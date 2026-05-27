@@ -154,8 +154,25 @@
     color: #27ae60;
     margin-top: 8px;
   }
+  .download-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 12px;
+    background: #f7f5ff;
+    color: #12124a;
+    border: 2px solid #534AB7;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .download-btn:hover { background: #534AB7; color: #fff; }
   .whatsapp-cta {
-    display: inline-block; margin-top: 1rem;
+    display: inline-block; margin-top: 0.75rem;
     background: #25D366; color: #fff;
     text-decoration: none; padding: 11px 22px;
     border-radius: 10px; font-size: 14px; font-weight: 500;
@@ -219,6 +236,7 @@
 
     <div class="email-note" id="emailNote"></div>
 
+    <button class="download-btn" onclick="downloadEntryCard()">⬇️ Download Entry Card</button>
     <a id="waLink" href="#" class="whatsapp-cta" target="_blank">💬 Share on WhatsApp</a>
     <p class="footer-note" style="margin-top:14px;">RSVP · Team Jhopdi.com</p>
   </div>
@@ -280,14 +298,14 @@ function handleSubmit() {
     .then(data => {
 
       if (data.status === 'duplicate_phone') {
-         showError('⚠️ This mobile number is already registered! Please use a different number.');
-         btn.disabled = false;
+        showError('⚠️ This mobile number is already registered! Please use a different number.');
+        btn.disabled = false;
         btn.textContent = 'Book My Slot →';
         return;
       }
 
       if (data.status === 'duplicate_email') {
-        showError('⚠️ Yeh email already registered hai!<br>Tumhara Entry Code hai: <strong>' + data.code + '</strong><br>Apna inbox check karo.');
+        showError('⚠️ This email is already registered!<br>Your Entry Code is: <strong>' + data.code + '</strong><br>Please check your inbox.');
         btn.disabled = false;
         btn.textContent = 'Book My Slot →';
         return;
@@ -322,6 +340,194 @@ function handleSubmit() {
       btn.disabled = false;
       btn.textContent = 'Book My Slot →';
     });
+}
+
+// ── Download Entry Card ──────────────────────────────────
+function downloadEntryCard() {
+  const name = document.getElementById('sName').textContent;
+  const slot = document.getElementById('sSlot').textContent;
+  const code = document.getElementById('sCode').textContent;
+
+  const CW = 640, CH = 380;
+  const canvas = document.createElement('canvas');
+  canvas.width  = CW;
+  canvas.height = CH;
+  const ctx = canvas.getContext('2d');
+
+  // ── Background ──────────────────────────────────────
+  ctx.fillStyle = '#12124a';
+  ctx.fillRect(0, 0, CW, CH);
+
+  // Subtle gradient overlay left side
+  const grad = ctx.createLinearGradient(0, 0, CW * 0.6, 0);
+  grad.addColorStop(0, 'rgba(83,74,183,0.25)');
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, CW, CH);
+
+  // ── Gold top & bottom bars ───────────────────────────
+  ctx.fillStyle = '#c9a227';
+  ctx.fillRect(0, 0, CW, 5);
+  ctx.fillRect(0, CH - 5, CW, 5);
+
+  // ── Left gold accent strip ───────────────────────────
+  ctx.fillStyle = '#c9a227';
+  ctx.fillRect(0, 0, 5, CH);
+
+  // ── Vertical divider ────────────────────────────────
+  ctx.strokeStyle = 'rgba(201,162,39,0.3)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(360, 20);
+  ctx.lineTo(360, CH - 20);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // ══════════════════════════════════════════════
+  // LEFT SECTION — Text info
+  // ══════════════════════════════════════════════
+
+  // Event title
+  ctx.fillStyle = '#c9a227';
+  ctx.font = 'bold 11px Arial';
+  ctx.letterSpacing = '2px';
+  ctx.fillText('VRINDAVAN PROPERTY EXPO 1.0', 24, 44);
+
+  // Underline
+  ctx.strokeStyle = 'rgba(201,162,39,0.4)';
+  ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(24, 50);
+  ctx.lineTo(340, 50);
+  ctx.stroke();
+
+  // Date + venue
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '10px Arial';
+  ctx.fillText('Saturday, 30 May 2026  ·  Lemon Tree (Sandal Suites), Noida', 24, 66);
+
+  // ── Name ────────────────────────────────────────────
+  ctx.fillStyle = 'rgba(201,162,39,0.7)';
+  ctx.font = '9px Arial';
+  ctx.fillText('GUEST NAME', 24, 100);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 20px Arial';
+  ctx.fillText(name, 24, 124);
+
+  // ── Slot ────────────────────────────────────────────
+  ctx.fillStyle = 'rgba(201,162,39,0.7)';
+  ctx.font = '9px Arial';
+  ctx.fillText('SLOT', 24, 158);
+
+  // Slot pill
+  ctx.fillStyle = 'rgba(201,162,39,0.15)';
+  ctx.strokeStyle = '#c9a227';
+  ctx.lineWidth = 1.2;
+  roundRect(ctx, 20, 165, 140, 32, 6);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#c9a227';
+  ctx.font = 'bold 18px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText(slot, 90, 186);
+  ctx.textAlign = 'left';
+
+  // ── Entry Code ──────────────────────────────────────
+  ctx.fillStyle = 'rgba(201,162,39,0.7)';
+  ctx.font = '9px Arial';
+  ctx.fillText('ENTRY CODE', 24, 224);
+
+  // Code box
+  ctx.fillStyle = 'rgba(201,162,39,0.12)';
+  ctx.strokeStyle = '#c9a227';
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, 20, 232, 210, 48, 8);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#c9a227';
+  ctx.font = 'bold 28px "Courier New"';
+  ctx.textAlign = 'center';
+  ctx.fillText(code, 125, 265);
+  ctx.textAlign = 'left';
+
+  // Show at gate hint
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  ctx.font = '9px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('Show this code or QR at the entry gate', 185, 302);
+  ctx.textAlign = 'left';
+
+  // ── Footer left ──────────────────────────────────────
+  ctx.fillStyle = 'rgba(201,162,39,0.5)';
+  ctx.font = '8px Arial';
+  ctx.fillText('RSVP · Team Jhopdi.com  |  jhopdi-events.github.io', 24, CH - 16);
+
+  // ══════════════════════════════════════════════
+  // RIGHT SECTION — QR code
+  // ══════════════════════════════════════════════
+  const qrCanvas = document.querySelector('#qrCode canvas');
+  if (qrCanvas) {
+    // White QR background box
+    ctx.fillStyle = '#ffffff';
+    roundRect(ctx, 384, 40, 226, 226, 12);
+    ctx.fill();
+
+    // Draw QR
+    ctx.drawImage(qrCanvas, 395, 51, 204, 204);
+
+    // QR labels
+    ctx.fillStyle = 'rgba(201,162,39,0.8)';
+    ctx.font = 'bold 9px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('SCAN QR AT ENTRY GATE', CW - 96, 288);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.font = '8.5px Arial';
+    ctx.fillText('or show Entry Code: ' + code, CW - 96, 304);
+    ctx.textAlign = 'left';
+  } else {
+    // Fallback if QR not ready
+    ctx.fillStyle = 'rgba(255,255,255,0.1)';
+    roundRect(ctx, 384, 40, 226, 226, 12);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(201,162,39,0.6)';
+    ctx.font = '11px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('QR Code', CW - 96, 158);
+    ctx.textAlign = 'left';
+  }
+
+  // ── Investments line bottom right ────────────────────
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.font = '8px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('Investments below ₹50 Lacs  ·  Followed by Hi-Tea', CW - 96, CH - 16);
+  ctx.textAlign = 'left';
+
+  // ── Download ─────────────────────────────────────────
+  const link = document.createElement('a');
+  link.download = 'VPE-EntryCard-' + code + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// Helper: rounded rectangle path
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 </script>
 </body>
