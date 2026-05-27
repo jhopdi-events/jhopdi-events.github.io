@@ -1,491 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Grand Launch — Registration | Jhopdi.com × Dwarka Puri</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vrindavan Property Expo 1.0 — Register Your Slot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Jost:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-  font-family:'Inter',sans-serif;
-  min-height:100vh;
-  background:#0B1C36;
-  color:#fff;
-}
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #0d0d2b;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-/* ── BANNER ── */
-.banner{
-  width:100%;
-  overflow:hidden;
-  position:relative;
-  background:#122347;
-}
-.banner img{
-  width:100%;
-  height:auto;
-  display:block;
-}
-.banner-overlay{
-  position:absolute;
-  bottom:0;left:0;right:0;
-  height:80px;
-  background:linear-gradient(to bottom, transparent, #0B1C36);
-}
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 20%, rgba(83,74,183,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(212,175,55,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
 
-/* ── HERO ── */
-.hero{
-  background:#0B1C36;
-  padding:24px 20px 0;
-  text-align:center;
-  position:relative;
-}
+  .card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
 
-.hero-logos{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:16px;
-}
-.hero-logo-box{
-  background:rgba(201,150,12,0.12);
-  border:1px solid rgba(201,150,12,0.35);
-  border-radius:8px;
-  padding:5px 14px;
-  font-size:13px;
-  font-weight:700;
-  color:#C9960C;
-  letter-spacing:0.5px;
-}
-.hero-logo-x{
-  font-size:16px;
-  color:rgba(201,150,12,0.4);
-  font-weight:300;
-}
+  .header {
+    background: #12124a;
+    padding: 1.75rem 1.75rem 1.5rem;
+    text-align: center;
+    border-bottom: 3px solid #c9a227;
+    position: relative;
+  }
 
-.hero-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  background:rgba(201,150,12,0.1);
-  border:1px solid rgba(201,150,12,0.3);
-  border-radius:20px;
-  padding:5px 16px;
-  font-size:11px;
-  font-weight:600;
-  color:#e6b020;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  margin-bottom:14px;
-}
+  .header-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 1.1rem;
+  }
 
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:34px;
-  font-weight:700;
-  line-height:1.15;
-  color:#fff;
-  margin-bottom:4px;
-}
-.hero h1 span{color:#C9960C;}
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: #c9a227;
+    letter-spacing: 0.04em;
+  }
 
-.hero-sub{
-  font-size:14px;
-  color:rgba(255,255,255,0.5);
-  margin-bottom:20px;
-  font-style:italic;
-}
+  .logo-divider {
+    width: 1px;
+    height: 22px;
+    background: rgba(201,162,39,0.4);
+  }
 
-.hero-pills{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin-bottom:28px;
-}
-.pill{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:20px;
-  padding:6px 14px;
-  font-size:12px;
-  font-weight:500;
-  color:rgba(255,255,255,0.8);
-}
+  .logo-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
 
-/* ── FORM AREA ── */
-.form-wrap{
-  max-width:480px;
-  margin:0 auto;
-  padding:0 16px 48px;
-}
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #c9a227;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
 
-.form-card{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:24px;
-  padding:28px 22px;
-  backdrop-filter:blur(20px);
-  box-shadow:0 20px 60px rgba(0,0,0,0.3);
-}
+  .header h1 span {
+    display: block;
+    font-size: 18px;
+    color: #fff;
+  }
 
-.form-card-title{
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  font-weight:700;
-  text-align:center;
-  margin-bottom:4px;
-}
-.form-card-sub{
-  font-size:13px;
-  color:rgba(255,255,255,0.4);
-  text-align:center;
-  margin-bottom:22px;
-}
+  .stars {
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #c9a227;
+    margin: 8px 0;
+  }
 
-.field{margin-bottom:14px;}
-.field label{
-  display:block;
-  font-size:11px;
-  font-weight:600;
-  color:rgba(255,255,255,0.5);
-  text-transform:uppercase;
-  letter-spacing:0.8px;
-  margin-bottom:7px;
-}
-.req{color:#C9960C;margin-left:2px;}
+  .event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 10px;
+  }
 
-.field input,.field select{
-  width:100%;
-  padding:14px 16px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.12);
-  background:rgba(255,255,255,0.06);
-  color:#fff;
-  font-size:15px;
-  font-family:'Inter',sans-serif;
-  outline:none;
-  transition:all 0.2s;
-  -webkit-appearance:none;
-}
-.field input::placeholder{color:rgba(255,255,255,0.25);font-size:14px;}
-.field input:focus,.field select:focus{
-  border-color:#C9960C;
-  background:rgba(201,150,12,0.05);
-  box-shadow:0 0 0 3px rgba(201,150,12,0.15);
-}
-.field select option{background:#0f2347;color:#fff;}
+  .event-info p {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.72);
+    font-weight: 400;
+  }
 
-.consent{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  background:rgba(201,150,12,0.06);
-  border:1px solid rgba(201,150,12,0.18);
-  border-radius:12px;
-  padding:14px;
-  margin:18px 0;
-  cursor:pointer;
-}
-.consent input[type="checkbox"]{
-  width:18px;height:18px;min-width:18px;
-  margin-top:1px;accent-color:#C9960C;cursor:pointer;
-}
-.consent label{
-  font-size:13px;
-  color:rgba(255,255,255,0.7);
-  line-height:1.5;
-  cursor:pointer;
-}
+  .event-info p strong {
+    color: #e8c84a;
+    font-weight: 500;
+  }
 
-.btn-submit{
-  width:100%;
-  padding:17px;
-  background:linear-gradient(135deg,#C9960C,#e6b020);
-  color:#0B1C36;
-  border:none;
-  border-radius:14px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  font-family:'Inter',sans-serif;
-  box-shadow:0 6px 24px rgba(201,150,12,0.4);
-  transition:all 0.2s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-}
-.btn-submit:active{transform:scale(0.98);}
-.btn-submit:disabled{opacity:0.6;cursor:not-allowed;}
+  .body {
+    padding: 1.75rem 1.75rem 2rem;
+    background: #fff;
+  }
 
-.form-note{
-  text-align:center;
-  font-size:12px;
-  color:rgba(255,255,255,0.25);
-  margin-top:14px;
-  line-height:1.6;
-}
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a4e;
+    margin-bottom: 7px;
+    letter-spacing: 0.02em;
+  }
 
-/* Result messages */
-.msg{
-  display:none;
-  border-radius:24px;
-  padding:36px 24px;
-  text-align:center;
-  animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-}
-@keyframes popIn{from{transform:scale(0.88);opacity:0}to{transform:scale(1);opacity:1}}
-.msg.success{background:linear-gradient(135deg,#054f35,#065F46);border:2px solid #22C55E;box-shadow:0 12px 40px rgba(34,197,94,0.2);display:block;}
-.msg.duplicate{background:linear-gradient(135deg,#7c3508,#92400e);border:2px solid #F59E0B;box-shadow:0 12px 40px rgba(245,158,11,0.2);display:block;}
-.msg.error{background:linear-gradient(135deg,#7f1d1d,#991b1b);border:2px solid #EF4444;box-shadow:0 12px 40px rgba(239,68,68,0.2);display:block;}
+  .form-label .req { color: #c0392b; }
 
-.msg-icon{font-size:56px;margin-bottom:14px;line-height:1;}
-.msg-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:10px;}
-.msg-text{font-size:14px;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:6px;}
-.msg-id{
-  background:rgba(0,0,0,0.3);
-  border-radius:10px;
-  padding:12px 20px;
-  margin:16px 0;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:3px;
-  color:#fff;
-}
-.msg-note{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;margin-top:8px;}
+  .field {
+    margin-bottom: 1.1rem;
+  }
 
-.spin{
-  display:inline-block;width:18px;height:18px;
-  border:3px solid rgba(11,28,54,0.3);border-top-color:#0B1C36;
-  border-radius:50%;animation:spinning 0.7s linear infinite;
-}
-@keyframes spinning{to{transform:rotate(360deg)}}
+  input[type="text"],
+  input[type="tel"] {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #e0dff5;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Jost', sans-serif;
+    color: #111;
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.2s;
+  }
 
-.page-footer{
-  text-align:center;
-  padding:24px 16px;
-  font-size:12px;
-  color:rgba(255,255,255,0.15);
-  border-top:1px solid rgba(255,255,255,0.05);
-  margin-top:8px;
-}
+  input[type="text"]:focus,
+  input[type="tel"]:focus {
+    border-color: #534AB7;
+    background: #fff;
+  }
+
+  .slot-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a4e;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .slot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.4rem;
+  }
+
+  .slot-btn {
+    border: 1.5px solid #d4d2ef;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: #fafafa;
+  }
+
+  .slot-btn .time {
+    font-size: 17px;
+    font-weight: 500;
+    color: #1a1a4e;
+    display: block;
+  }
+
+  .slot-btn .tag {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .slot-btn:hover {
+    border-color: #534AB7;
+    background: #f0eefd;
+  }
+
+  .slot-btn.active {
+    border-color: #534AB7;
+    background: #12124a;
+  }
+
+  .slot-btn.active .time {
+    color: #c9a227;
+  }
+
+  .slot-btn.active .tag {
+    color: rgba(255,255,255,0.6);
+  }
+
+  input[type="hidden"] { display: none; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: #12124a;
+    color: #c9a227;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover { background: #1e1e6e; }
+  .submit-btn:active { transform: scale(0.99); }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11.5px;
+    color: #aaa;
+    margin-top: 14px;
+  }
+
+  /* Success screen */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 2.5rem 1.75rem;
+    background: #fff;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    background: #eafaf0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 28px;
+  }
+
+  .success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #12124a;
+    margin-bottom: 8px;
+  }
+
+  .success-screen p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .success-slot {
+    background: #12124a;
+    color: #c9a227;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 500;
+    display: inline-block;
+    margin: 1rem 0;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .whatsapp-cta {
+    display: inline-block;
+    margin-top: 1rem;
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
 
-<!-- ── BANNER IMAGE ── -->
-<div class="banner">
-  <img
-    src="dwarkapuri-project-1.png"
-    alt="Meet & Greet 2026 — Jhopdi.com × Dwarka Puri Vrindavan"
-    onerror="this.parentElement.style.minHeight='160px'"
-  />
-  <div class="banner-overlay"></div>
-</div>
-
-<!-- ── HERO ── -->
-<div class="hero">
-  <div class="hero-logos">
-    <div class="hero-logo-box">Jhopdi.com</div>
-    <div class="hero-logo-x">×</div>
-    <div class="hero-logo-box">Dwarka Puri Vrindavan</div>
-  </div>
-
-  <div class="hero-badge">✦ Exclusive Invitation</div>
-
-  <h1>Grand <span>Launch - Dwarka Puri</span></h1>
-  <div class="hero-sub">An Evening of Cocktails &amp; Dinner</div>
-
-  <div class="hero-pills">
-    <div class="pill">📅 Saturday, May 9, 2026</div>
-    <div class="pill">⏰ 7:00 PM Onwards</div>
-    <div class="pill">📍 Sarovar Portico, Vrindavan</div>
-    <div class="pill">🍽 Cocktails &amp; Dinner</div>
-  </div>
-</div>
-
-<!-- ── FORM ── -->
-<div class="form-wrap">
-
-  <div class="form-card" id="formCard">
-    <div class="form-card-title">Register for the Event</div>
-    <div class="form-card-sub">Fill in your details to receive your QR Entry Pass instantly</div>
-
-    <div class="field">
-      <label>Full Name <span class="req">*</span></label>
-      <input type="text" id="name" placeholder="Enter your full name" />
+<div class="card">
+  <div class="header">
+    <div class="header-logos">
+      <div>
+        <div class="logo-text">Jhopdi.com</div>
+        <div class="logo-sub">Your Realty Growth Partner</div>
+      </div>
+      <div class="logo-divider"></div>
+      <div>
+        <div class="logo-text">Shri Vrinda</div>
+        <div class="logo-sub">Let's Build Together</div>
+      </div>
     </div>
-
-    <div class="field">
-      <label>Mobile / WhatsApp Number <span class="req">*</span></label>
-      <input type="tel" id="mobile" placeholder="10-digit mobile number" maxlength="10" />
-    </div>
-
-    <div class="field">
-      <label>Email ID <span class="req">*</span></label>
-      <input type="email" id="email" placeholder="your@email.com" />
-    </div>
-
-    <div class="field">
-      <label>Company / Firm Name</label>
-      <input type="text" id="company" placeholder="Optional" />
-    </div>
-
-    <!-- ── RM NAME FIELD (NEW) ── -->
-    <div class="field">
-      <label>RM Name <span class="req">*</span></label>
-      <input type="text" id="rm" placeholder="Enter RM name" />
-    </div>
-
-    <div class="field">
-      <label>Will You Attend? <span class="req">*</span></label>
-      <select id="attend">
-        <option value="Yes, I will attend">✅ Yes, I will attend</option>
-        <option value="Maybe">🤔 Maybe</option>
-      </select>
-    </div>
-
-    <div class="consent">
-      <input type="checkbox" id="consent" />
-      <label for="consent">I agree to receive event updates and my QR Entry Pass on WhatsApp &amp; Email</label>
-    </div>
-
-    <button class="btn-submit" id="submitBtn" onclick="submitForm()">
-      🎟️ &nbsp; Register &amp; Get Entry Pass
-    </button>
-
-    <div class="form-note">
-      Your QR Code Entry Pass will be sent to your email instantly.<br>
-      One registration per person only. No duplicate entries allowed.
+    <h1>Vrindavan<span>Property Expo 1.0</span></h1>
+    <div class="stars">★ ★ ★</div>
+    <div class="event-info">
+      <p><strong>Saturday, 30 May 2026</strong> &nbsp;·&nbsp; 10 AM – 6 PM</p>
+      <p>Lemon Tree (Sandal Suites), Sector-135, Noida</p>
+      <p>Investments below <strong>₹50 Lacs</strong></p>
     </div>
   </div>
 
-  <!-- Success -->
-  <div class="msg" id="msgSuccess" style="display:none">
-    <div class="msg-icon">🎉</div>
-    <div class="msg-title">Registration Confirmed!</div>
-    <div class="msg-text">Your QR Code Entry Pass has been sent to your registered email address. Please check your inbox.</div>
-    <div class="msg-id" id="successEntryId"></div>
-    <div class="msg-note">
-      📧 Open your email → Find the entry pass → Screenshot the QR Code<br>
-      Show the QR Code at the entry gate on May 9, 2026.<br><br>
-      For any queries, contact: <strong>+91 6202958143</strong>
-    </div>
+  <div class="body" id="formBody">
+    <form id="regForm" onsubmit="handleSubmit(event)">
+
+      <div class="field">
+        <label class="form-label">Full Name <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Your full name" required />
+      </div>
+
+      <div class="field">
+        <label class="form-label">Mobile Number <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="+91 98XXX XXXXX" pattern="[0-9]{10,13}" required />
+      </div>
+
+      <div class="field">
+        <label class="form-label">City / Coming From <span class="req">*</span></label>
+        <input type="text" id="city" placeholder="e.g. Noida, Delhi, Agra..." required />
+      </div>
+
+      <span class="slot-label">Select Your Preferred Slot <span class="req">*</span></span>
+      <div class="slot-grid">
+        <div class="slot-btn" onclick="selectSlot(this, '10:00 AM')">
+          <span class="time">10:00 AM</span>
+        </div>
+        <div class="slot-btn" onclick="selectSlot(this, '11:00 AM')">
+          <span class="time">11:00 AM</span>
+        </div>
+        <div class="slot-btn" onclick="selectSlot(this, '12:30 PM')">
+          <span class="time">12:30 PM</span>
+        </div>
+        <div class="slot-btn" onclick="selectSlot(this, '2:00 PM')">
+          <span class="time">2:00 PM</span>
+        </div>
+        <div class="slot-btn" onclick="selectSlot(this, '3:00 PM')">
+          <span class="time">3:00 PM</span>
+        </div>
+        <div class="slot-btn" onclick="selectSlot(this, '5:00 PM')">
+          <span class="time">5:00 PM</span>
+        </div>
+      </div>
+      <input type="hidden" id="selectedSlot" required />
+
+      <button type="submit" class="submit-btn">Book My Slot →</button>
+      <p class="footer-note">Team Jhopdi.com will confirm via WhatsApp</p>
+
+    </form>
   </div>
 
-  <!-- Duplicate -->
-  <div class="msg" id="msgDuplicate" style="display:none">
-    <div class="msg-icon">⚠️</div>
-    <div class="msg-title">Already Registered!</div>
-    <div class="msg-text">You have already registered for this event using this mobile number or email address.</div>
-    <div class="msg-id" id="dupEntryId"></div>
-    <div class="msg-note">
-      Please check your previous email for your QR Code Entry Pass.<br><br>
-      Need help? Contact: <strong>+91 6202958143</strong>
-    </div>
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>You're Registered!</h2>
+    <p>Thank you, <strong id="sName"></strong>.<br/>Your slot is confirmed for</p>
+    <div class="success-slot" id="sSlot"></div>
+    <p style="font-size:13px; color:#888;">Saturday, 30 May 2026 · Lemon Tree, Noida</p>
+    <br/>
+    <a href="https://wa.me/919XXXXXXXXX?text=Hi%2C+I+just+registered+for+Vrindavan+Property+Expo+1.0" class="whatsapp-cta" target="_blank">
+      💬 Chat on WhatsApp
+    </a>
+    <p class="footer-note" style="margin-top:14px;">RSVP · Team Jhopdi.com</p>
   </div>
-
-  <!-- Error -->
-  <div class="msg" id="msgError" style="display:none">
-    <div class="msg-icon">❌</div>
-    <div class="msg-title">Something Went Wrong</div>
-    <div class="msg-text" id="errorText">Please try again or contact us at +91 6202958143</div>
-  </div>
-
-</div>
-
-<div class="page-footer">
-  © 2026 Jhopdi.com × Dwarka Puri Vrindavan &nbsp;|&nbsp; Meet &amp; Greet
 </div>
 
 <script>
-var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOorIpg6aElyFYxlu0JpP5QSH8KnTyU4DwkuHyCn_PK5Y2WSvax7ZGYpHZVMfFs2aMXA/exec";
+let chosenSlot = '';
 
-function submitForm() {
-  var name    = document.getElementById('name').value.trim();
-  var mobile  = document.getElementById('mobile').value.trim();
-  var email   = document.getElementById('email').value.trim();
-  var company = document.getElementById('company').value.trim();
-  var rm      = document.getElementById('rm').value.trim();   // ← NEW
-  var attend  = document.getElementById('attend').value;
-  var consent = document.getElementById('consent').checked;
-
-  if (!name)                          { alert('Please enter your full name.');                 return; }
-  if (!mobile || mobile.length < 10)  { alert('Please enter a valid 10-digit mobile number.'); return; }
-  if (!email || !email.includes('@')) { alert('Please enter a valid email address.');          return; }
-  if (!rm)                            { alert('Please enter RM name.');                        return; } // ← NEW
-  if (!consent)                       { alert('Please agree to receive updates.');             return; }
-
-  var btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Checking...';
-
-  // Step 1 — Duplicate check
-  fetch(APPS_SCRIPT_URL + "?action=checkdup&email=" + encodeURIComponent(email) + "&mobile=" + encodeURIComponent(mobile), { redirect:'follow' })
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if (data.isDuplicate) {
-        showDuplicate(data.entryId);
-      } else {
-        btn.innerHTML = '<span class="spin"></span> Registering...';
-        // Step 2 — Register
-        var url = APPS_SCRIPT_URL +
-          "?action=register" +
-          "&name="    + encodeURIComponent(name) +
-          "&mobile="  + encodeURIComponent(mobile) +
-          "&email="   + encodeURIComponent(email) +
-          "&company=" + encodeURIComponent(company || 'N/A') +
-          "&rm="      + encodeURIComponent(rm) +              // ← NEW
-          "&attend="  + encodeURIComponent(attend);
-
-        fetch(url, { redirect:'follow' })
-          .then(function(r){ return r.json(); })
-          .then(function(result){
-            if (result.success) {
-              showSuccess(result.entryId);
-            } else if (result.message === 'already_registered') {
-              showDuplicate(result.entryId);
-            } else {
-              showError(result.message);
-            }
-          })
-          .catch(function(){ showError('Connection error. Please try again.'); });
-      }
-    })
-    .catch(function(){ showError('Connection error. Please try again.'); });
+function selectSlot(el, value) {
+  document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  chosenSlot = value;
+  document.getElementById('selectedSlot').value = value;
 }
 
-function showSuccess(entryId) {
-  document.getElementById('formCard').style.display = 'none';
-  document.getElementById('successEntryId').innerText = 'Entry ID: ' + entryId;
-  var ms = document.getElementById('msgSuccess'); ms.style.display='block'; ms.className='msg success';
-  window.scrollTo({top:0, behavior:'smooth'});
-}
+function handleSubmit(e) {
+  e.preventDefault();
+  if (!chosenSlot) { alert('Please select a time slot.'); return; }
 
-function showDuplicate(entryId) {
-  document.getElementById('formCard').style.display = 'none';
-  document.getElementById('dupEntryId').innerText = entryId ? 'Your Entry ID: ' + entryId : '';
-  var md = document.getElementById('msgDuplicate'); md.style.display='block'; md.className='msg duplicate';
-  window.scrollTo({top:0, behavior:'smooth'});
-}
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const city = document.getElementById('city').value;
 
-function showError(msg) {
-  var btn = document.getElementById('submitBtn');
-  btn.disabled = false;
-  btn.innerHTML = '🎟️ &nbsp; Register &amp; Get Entry Pass';
-  document.getElementById('errorText').innerText = msg || 'Please try again.';
-  var me = document.getElementById('msgError'); me.style.display='block'; me.className='msg error';
-}
+  // Send to Google Sheets via your Apps Script Web App URL
+  const SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
-document.getElementById('mobile').addEventListener('input', function(){
-  this.value = this.value.replace(/[^0-9]/g, '');
-});
+  const payload = { name, phone, city, slot: chosenSlot, timestamp: new Date().toLocaleString('en-IN') };
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+
+  // Show success screen
+  document.getElementById('sName').textContent = name;
+  document.getElementById('sSlot').textContent = chosenSlot;
+  document.getElementById('formBody').style.display = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+}
 </script>
+
 </body>
 </html>
