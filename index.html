@@ -208,7 +208,7 @@
 
     <div class="field">
       <label class="form-label">RM Name</label>
-      <input type="text" id="rm" placeholder="Relationship Manager name" />
+      <input type="text" id="rm" placeholder="Relationship Manager name (optional)" />
     </div>
 
     <span class="slot-label">Select Your Preferred Slot <span class="req">*</span></span>
@@ -268,13 +268,7 @@ function hideError() {
   document.getElementById('errorMsg').style.display = 'none';
 }
 
-function generateCode() {
-  const num = Math.floor(Math.random() * 9999) + 1;
-  const padded = String(num).padStart(4, '0');
-  return 'JDC-' + padded;
-}
- 
- function handleSubmit() {
+function handleSubmit() {
   hideError();
 
   const name  = document.getElementById('name').value.trim();
@@ -293,10 +287,10 @@ function generateCode() {
   btn.disabled = true;
   btn.textContent = 'Submitting...';
 
-  const code = generateCode();
   const timestamp = new Date().toLocaleString('en-IN');
 
-  const params = new URLSearchParams({ name, phone, email, city, rm, slot: chosenSlot, code, timestamp });
+  // Note: no code generated here — server generates it
+  const params = new URLSearchParams({ name, phone, email, city, rm, slot: chosenSlot, timestamp });
 
   fetch(SHEET_URL + '?' + params.toString())
     .then(r => r.json())
@@ -316,7 +310,9 @@ function generateCode() {
         return;
       }
 
-      // Success
+      // Success — use server-returned code
+      const code = data.code;
+
       document.getElementById('sName').textContent = name;
       document.getElementById('sSlot').textContent = chosenSlot;
       document.getElementById('sCode').textContent = code;
@@ -362,7 +358,6 @@ function downloadEntryCard() {
   // Background
   ctx.fillStyle = '#12124a';
   ctx.fillRect(0, 0, CW, CH);
-
   const grad = ctx.createLinearGradient(0, 0, CW * 0.55, 0);
   grad.addColorStop(0, 'rgba(83,74,183,0.25)');
   grad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -380,26 +375,20 @@ function downloadEntryCard() {
   ctx.lineWidth = 1;
   ctx.setLineDash([5, 5]);
   ctx.beginPath();
-  ctx.moveTo(370, 20);
-  ctx.lineTo(370, CH - 20);
+  ctx.moveTo(370, 20); ctx.lineTo(370, CH - 20);
   ctx.stroke();
   ctx.setLineDash([]);
-
-  // ── LEFT SECTION ──────────────────────────────────────
 
   // Title
   ctx.fillStyle = '#c9a227';
   ctx.font = 'bold 12px Arial';
   ctx.fillText('VRINDAVAN PROPERTY EXPO 1.0', 24, 44);
-
-  // Underline
   ctx.strokeStyle = 'rgba(201,162,39,0.4)';
   ctx.lineWidth = 0.8;
   ctx.beginPath();
   ctx.moveTo(24, 52); ctx.lineTo(348, 52);
   ctx.stroke();
 
-  // Date venue
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '10px Arial';
   ctx.fillText('Sat, 30 May 2026  ·  Lemon Tree, Sector-135, Noida', 24, 68);
@@ -442,19 +431,17 @@ function downloadEntryCard() {
   ctx.fillText(code, 137, 272);
   ctx.textAlign = 'left';
 
-  // Hint
   ctx.fillStyle = 'rgba(255,255,255,0.3)';
   ctx.font = '9px Arial';
   ctx.textAlign = 'center';
   ctx.fillText('Show this code or QR at the entry gate', 185, 312);
   ctx.textAlign = 'left';
 
-  // Footer left
   ctx.fillStyle = 'rgba(201,162,39,0.45)';
   ctx.font = '8px Arial';
   ctx.fillText('RSVP · Team Jhopdi.com  |  jhopdi-events.github.io', 24, CH - 14);
 
-  // ── RIGHT SECTION — QR ───────────────────────────────
+  // QR section
   const QR_SIZE = 210;
   const QR_X = 390;
   const QR_Y = 38;
@@ -466,7 +453,6 @@ function downloadEntryCard() {
     roundRect(ctx, QR_X, QR_Y, QR_SIZE + 40, QR_SIZE + 20, 12);
     ctx.fill();
     ctx.drawImage(qrCanvas, QR_X + 20, QR_Y + 10, QR_SIZE, QR_SIZE);
-
     ctx.fillStyle = 'rgba(201,162,39,0.85)';
     ctx.font = 'bold 9.5px Arial';
     ctx.textAlign = 'center';
@@ -477,7 +463,6 @@ function downloadEntryCard() {
   }
   ctx.textAlign = 'left';
 
-  // Footer right
   ctx.fillStyle = 'rgba(255,255,255,0.25)';
   ctx.font = '8px Arial';
   ctx.textAlign = 'center';
@@ -485,7 +470,7 @@ function downloadEntryCard() {
   ctx.textAlign = 'left';
 
   const link = document.createElement('a');
-  link.download = 'VPE-EntryCard-' + code + '.png';
+  link.download = 'EntryCard-' + code + '.png';
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
