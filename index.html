@@ -269,12 +269,12 @@ function hideError() {
 }
 
 function generateCode() {
-  const ts = Date.now().toString().slice(-4); // last 4 digits of timestamp
-  const num = Math.floor(Math.random() * 99) + 1;
-  const padded = String(num).padStart(2, '0');
-  return 'JDC-' + ts + padded;
+  const num = Math.floor(Math.random() * 9999) + 1;
+  const padded = String(num).padStart(4, '0');
+  return 'JDC-' + padded;
 }
-function handleSubmit() {
+ 
+ function handleSubmit() {
   hideError();
 
   const name  = document.getElementById('name').value.trim();
