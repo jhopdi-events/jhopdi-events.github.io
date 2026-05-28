@@ -206,10 +206,10 @@
       <input type="text" id="city" placeholder="e.g. Noida, Delhi, Agra..." />
     </div>
 
-   <div class="field">
-  <label class="form-label">RM Name</label>
-  <input type="text" id="rm" placeholder="Relationship Manager name (optional)" />
-</div>
+    <div class="field">
+      <label class="form-label">RM Name</label>
+      <input type="text" id="rm" placeholder="Relationship Manager name (optional)" />
+    </div>
 
     <span class="slot-label">Select Your Preferred Slot <span class="req">*</span></span>
     <div class="slot-grid">
@@ -282,6 +282,7 @@ function handleSubmit() {
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
   const city  = document.getElementById('city').value.trim();
+  const rm    = document.getElementById('rm').value.trim();
 
   if (!name)  { showError('Please enter your full name.'); return; }
   if (!/^[0-9]{10}$/.test(phone)) { showError('Please enter a valid 10-digit mobile number.'); return; }
@@ -296,7 +297,7 @@ function handleSubmit() {
   const code = generateCode();
   const timestamp = new Date().toLocaleString('en-IN');
 
-  const params = new URLSearchParams({ name, phone, email, city, slot: chosenSlot, code, timestamp });
+  const params = new URLSearchParams({ name, phone, email, city, rm, slot: chosenSlot, code, timestamp });
 
   fetch(SHEET_URL + '?' + params.toString())
     .then(r => r.json())
@@ -353,33 +354,29 @@ function downloadEntryCard() {
   const slot = document.getElementById('sSlot').textContent;
   const code = document.getElementById('sCode').textContent;
 
-  // Canvas size — wider to avoid cutoff
   const CW = 800, CH = 400;
   const canvas = document.createElement('canvas');
   canvas.width  = CW;
   canvas.height = CH;
   const ctx = canvas.getContext('2d');
 
-  // ── Background ──────────────────────────────────────
+  // Background
   ctx.fillStyle = '#12124a';
   ctx.fillRect(0, 0, CW, CH);
 
-  // Subtle gradient
   const grad = ctx.createLinearGradient(0, 0, CW * 0.55, 0);
   grad.addColorStop(0, 'rgba(83,74,183,0.25)');
   grad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, CW, CH);
 
-  // Gold top bar
+  // Gold bars
   ctx.fillStyle = '#c9a227';
   ctx.fillRect(0, 0, CW, 5);
-  // Gold bottom bar
   ctx.fillRect(0, CH - 5, CW, 5);
-  // Gold left strip
   ctx.fillRect(0, 0, 5, CH);
 
-  // Dashed vertical divider at midpoint
+  // Dashed divider
   ctx.strokeStyle = 'rgba(201,162,39,0.3)';
   ctx.lineWidth = 1;
   ctx.setLineDash([5, 5]);
@@ -389,11 +386,9 @@ function downloadEntryCard() {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // ══════════════════════════════════════════════
-  // LEFT SECTION
-  // ══════════════════════════════════════════════
+  // ── LEFT SECTION ──────────────────────────────────────
 
-  // Event title
+  // Title
   ctx.fillStyle = '#c9a227';
   ctx.font = 'bold 12px Arial';
   ctx.fillText('VRINDAVAN PROPERTY EXPO 1.0', 24, 44);
@@ -401,18 +396,16 @@ function downloadEntryCard() {
   // Underline
   ctx.strokeStyle = 'rgba(201,162,39,0.4)';
   ctx.lineWidth = 0.8;
-  ctx.setLineDash([]);
   ctx.beginPath();
-  ctx.moveTo(24, 52);
-  ctx.lineTo(348, 52);
+  ctx.moveTo(24, 52); ctx.lineTo(348, 52);
   ctx.stroke();
 
-  // Date + venue — shortened to fit
+  // Date venue
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '10px Arial';
   ctx.fillText('Sat, 30 May 2026  ·  Lemon Tree, Sector-135, Noida', 24, 68);
 
-  // Guest name
+  // Name
   ctx.fillStyle = 'rgba(201,162,39,0.7)';
   ctx.font = '9px Arial';
   ctx.fillText('GUEST NAME', 24, 102);
@@ -424,14 +417,11 @@ function downloadEntryCard() {
   ctx.fillStyle = 'rgba(201,162,39,0.7)';
   ctx.font = '9px Arial';
   ctx.fillText('SLOT', 24, 162);
-
-  // Slot pill
   ctx.fillStyle = 'rgba(201,162,39,0.15)';
   ctx.strokeStyle = '#c9a227';
   ctx.lineWidth = 1.2;
   roundRect(ctx, 22, 170, 150, 34, 6);
-  ctx.fill();
-  ctx.stroke();
+  ctx.fill(); ctx.stroke();
   ctx.fillStyle = '#c9a227';
   ctx.font = 'bold 18px Arial';
   ctx.textAlign = 'center';
@@ -442,21 +432,18 @@ function downloadEntryCard() {
   ctx.fillStyle = 'rgba(201,162,39,0.7)';
   ctx.font = '9px Arial';
   ctx.fillText('ENTRY CODE', 24, 228);
-
-  // Code box
   ctx.fillStyle = 'rgba(201,162,39,0.12)';
   ctx.strokeStyle = '#c9a227';
   ctx.lineWidth = 1.5;
   roundRect(ctx, 22, 236, 230, 52, 8);
-  ctx.fill();
-  ctx.stroke();
+  ctx.fill(); ctx.stroke();
   ctx.fillStyle = '#c9a227';
   ctx.font = 'bold 30px "Courier New"';
   ctx.textAlign = 'center';
   ctx.fillText(code, 137, 272);
   ctx.textAlign = 'left';
 
-  // Hint text
+  // Hint
   ctx.fillStyle = 'rgba(255,255,255,0.3)';
   ctx.font = '9px Arial';
   ctx.textAlign = 'center';
@@ -468,9 +455,7 @@ function downloadEntryCard() {
   ctx.font = '8px Arial';
   ctx.fillText('RSVP · Team Jhopdi.com  |  jhopdi-events.github.io', 24, CH - 14);
 
-  // ══════════════════════════════════════════════
-  // RIGHT SECTION — QR
-  // ══════════════════════════════════════════════
+  // ── RIGHT SECTION — QR ───────────────────────────────
   const QR_SIZE = 210;
   const QR_X = 390;
   const QR_Y = 38;
@@ -478,31 +463,18 @@ function downloadEntryCard() {
 
   const qrCanvas = document.querySelector('#qrCode canvas');
   if (qrCanvas) {
-    // White background for QR
     ctx.fillStyle = '#ffffff';
     roundRect(ctx, QR_X, QR_Y, QR_SIZE + 40, QR_SIZE + 20, 12);
     ctx.fill();
-
-    // Draw QR centered in white box
     ctx.drawImage(qrCanvas, QR_X + 20, QR_Y + 10, QR_SIZE, QR_SIZE);
 
-    // Labels below QR
     ctx.fillStyle = 'rgba(201,162,39,0.85)';
     ctx.font = 'bold 9.5px Arial';
     ctx.textAlign = 'center';
     ctx.fillText('SCAN QR AT ENTRY GATE', CENTER_X, QR_Y + QR_SIZE + 38);
-
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
     ctx.font = '8.5px Arial';
     ctx.fillText('or show Entry Code: ' + code, CENTER_X, QR_Y + QR_SIZE + 54);
-  } else {
-    ctx.fillStyle = 'rgba(255,255,255,0.08)';
-    roundRect(ctx, QR_X, QR_Y, QR_SIZE + 40, QR_SIZE + 20, 12);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(201,162,39,0.5)';
-    ctx.font = '11px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('QR Code', CENTER_X, QR_Y + QR_SIZE / 2);
   }
   ctx.textAlign = 'left';
 
@@ -513,14 +485,12 @@ function downloadEntryCard() {
   ctx.fillText('Investments below ₹50 Lacs  ·  Followed by Hi-Tea', CENTER_X, CH - 14);
   ctx.textAlign = 'left';
 
-  // Download
   const link = document.createElement('a');
   link.download = 'VPE-EntryCard-' + code + '.png';
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
 
-// Helper — rounded rectangle
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
