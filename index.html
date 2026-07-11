@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vrindavan Property Expo 1.0 — Register Your Slot</title>
+<title>Vrindavan Property Expo 2.O — Register Your Slot</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Jost:wght@400;500&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
@@ -249,6 +249,7 @@
 
 <script>
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzOlVHLkpitue9zvCPwg2RweGTiFxEZFxsPSVfNaYYPqZJKyESf_NNFbnxeWhU_jK8R/exec';
+const EVENT_TAG = 'expo2';   // <-- this row routes data into "Vrindavan Property Expo 2.O" tab
 let chosenSlot = '';
 
 function selectSlot(el, value) {
@@ -290,7 +291,7 @@ function handleSubmit() {
   const timestamp = new Date().toLocaleString('en-IN');
 
   // Note: no code generated here — server generates it
-  const params = new URLSearchParams({ name, phone, email, city, rm, slot: chosenSlot, timestamp });
+  const params = new URLSearchParams({ name, phone, email, city, rm, slot: chosenSlot, timestamp, event: EVENT_TAG });
 
   fetch(SHEET_URL + '?' + params.toString())
     .then(r => r.json())
@@ -325,7 +326,7 @@ function handleSubmit() {
       });
 
       const msg = encodeURIComponent(
-        'Hi! I have registered for Vrindavan Property Expo 1.0!\n' +
+        'Hi! I have registered for Vrindavan Property Expo 2.O!\n' +
         'Name: ' + name + '\n' +
         'Slot: ' + chosenSlot + '\n' +
         'Entry Code: ' + code + '\n' +
@@ -382,7 +383,7 @@ function downloadEntryCard() {
   // Title
   ctx.fillStyle = '#c9a227';
   ctx.font = 'bold 12px Arial';
-  ctx.fillText('VRINDAVAN PROPERTY EXPO 1.0', 24, 44);
+  ctx.fillText('VRINDAVAN PROPERTY EXPO 2.O', 24, 44);
   ctx.strokeStyle = 'rgba(201,162,39,0.4)';
   ctx.lineWidth = 0.8;
   ctx.beginPath();
